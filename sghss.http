@@ -9,3 +9,27 @@ Content-Type: application/json
    "email": "teste@gmail.com",
    "password": "teste"
 }
+
+
+### LOGIN
+POST {{sghss_HostAddress}}/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+   "email": "teste@gmail.com",
+   "password": "teste"
+}
+
+### USERS
+POST {{sghss_HostAddress}}/users
+Accept: application/json
+Content-Type: application/json
+
+{
+   "email": "teste1@gmail.com",
+   "password": "teste",
+   "name": "teste da silva",
+   "role": "PATIENT",
+   "cpf": "45885434824"
+}

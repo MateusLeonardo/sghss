@@ -15,7 +15,7 @@ export class AuthController {
   }
 
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('login')
   login(@UserDecorator() user: User) {
     return this.authService.login(user);
   }

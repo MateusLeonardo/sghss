@@ -1,1 +1,23 @@
-export class CreateUserDto {}
+import { IsEmail, IsEnum, IsStrongPassword } from 'class-validator';
+import { IsCPF } from 'src/decorators/is-cpf.decorator';
+import { UserRole } from 'src/enums/roles.enum';
+
+export class CreateUserDto {
+  @IsEmail()
+  email: string;
+
+  @IsStrongPassword({
+    minLength: 5,
+    minLowercase: 0,
+    minNumbers: 0,
+    minSymbols: 0,
+    minUppercase: 0,
+  })
+  password: string;
+
+  @IsCPF()
+  cpf: string;
+
+  @IsEnum(UserRole)
+  role: UserRole;
+}
