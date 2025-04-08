@@ -1,6 +1,6 @@
+import { Role } from '@prisma/client';
 import { IsEmail, IsEnum, IsStrongPassword } from 'class-validator';
 import { IsCPF } from 'src/decorators/is-cpf.decorator';
-import { UserRole } from 'src/enums/roles.enum';
 
 export class CreateUserDto {
   @IsEmail()
@@ -18,6 +18,6 @@ export class CreateUserDto {
   @IsCPF()
   cpf: string;
 
-  @IsEnum(UserRole)
-  role: UserRole;
+  @IsEnum(Role)
+  role: Role;
 }

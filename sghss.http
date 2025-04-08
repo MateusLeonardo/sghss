@@ -1,5 +1,5 @@
 @sghss_HostAddress = http://localhost:3000
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzQ0MTMwMzIyLCJleHAiOjE3NDQxMzM5MjJ9.ev-izTc3oZdnsvud-EggTV9E1LLNG_GjhTvNOxYQhc4
 ### REGISTER
 POST {{sghss_HostAddress}}/auth/register
 Accept: application/json
@@ -38,6 +38,7 @@ Content-Type: application/json
 GET {{sghss_HostAddress}}/users
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{ token }}
 
 ### USERS - GET ONE
 GET {{sghss_HostAddress}}/users/1
