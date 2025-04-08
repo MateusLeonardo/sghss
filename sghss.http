@@ -21,7 +21,7 @@ Content-Type: application/json
    "password": "teste"
 }
 
-### USERS
+### USERS - CREATE
 POST {{sghss_HostAddress}}/users
 Accept: application/json
 Content-Type: application/json
@@ -33,3 +33,27 @@ Content-Type: application/json
    "role": "PATIENT",
    "cpf": "45885434824"
 }
+
+### USERS - GET ALL
+GET {{sghss_HostAddress}}/users
+Accept: application/json
+Content-Type: application/json
+
+### USERS - GET ONE
+GET {{sghss_HostAddress}}/users/1
+Accept: application/json
+Content-Type: application/json
+
+### USERS - UPDATE
+PATCH  {{sghss_HostAddress}}/users/1
+Accept: application/json
+Content-Type: application/json
+
+{
+   "name": "teste da silva santos"
+}
+
+### USERS - DELETE
+DELETE {{sghss_HostAddress}}/users/1
+Accept: application/json
+Content-Type: application/json
