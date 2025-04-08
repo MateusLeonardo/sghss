@@ -1,0 +1,11 @@
+@sghss_HostAddress = http://localhost:3000
+
+### REGISTER
+POST {{sghss_HostAddress}}/auth/register
+Accept: application/json
+Content-Type: application/json
+
+{
+   "email": "teste@gmail.com",
+   "password": "teste"
+}

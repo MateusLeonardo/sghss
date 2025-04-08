@@ -7,12 +7,85 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
+  name      String?
+  cpf       String?  @unique
+  role      Role     @default(PATIENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Relacionamentos
+  patientProfile        Patient?
+  doctorProfile         Doctor?
+  doctorAppointments    Appointment[]   @relation("DoctorAppointments")
+  patientAppointments   Appointment[]   @relation("PatientAppointments")
+  doctorMedicalRecords  MedicalRecord[] @relation("DoctorMedicalRecords")
+  patientMedicalRecords MedicalRecord[] @relation("PatientMedicalRecords")
+
   @@map("users")
+}
+
+model Patient {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @unique
+  user        User     @relation(fields: [userId], references: [id])
+  bloodType   String?
+  allergies   String?
+  medications String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("patients")
+}
+
+model Doctor {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  specialty String
+  crm       String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("doctors")
+}
+
+model Appointment {
+  id        Int      @id @default(autoincrement())
+  patientId Int
+  doctorId  Int
+  date      DateTime
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient User @relation("PatientAppointments", fields: [patientId], references: [id])
+  doctor  User @relation("DoctorAppointments", fields: [doctorId], references: [id])
+
+  @@map("appointments")
+}
+
+model MedicalRecord {
+  id           Int      @id @default(autoincrement())
+  patientId    Int
+  doctorId     Int
+  date         DateTime @default(now())
+  diagnosis    String
+  prescription String?
+  notes        String?
+  createdAt    DateTime @default(now())
+
+  patient User @relation("PatientMedicalRecords", fields: [patientId], references: [id])
+  doctor  User @relation("DoctorMedicalRecords", fields: [doctorId], references: [id])
+
+  @@map("medical_records")
 }
