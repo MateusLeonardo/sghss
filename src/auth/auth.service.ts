@@ -39,7 +39,7 @@ export class AuthService {
     });
 
     if (userExists) {
-      return new ConflictException('User already exists');
+      throw new ConflictException('User already exists');
     }
 
     const passwordHashed = await bcrypt.hash(password, await bcrypt.genSalt());
@@ -47,7 +47,12 @@ export class AuthService {
       data: {
         email,
         password: passwordHashed,
+        role: 'PATIENT',
+        patientProfile: {
+          create: {}
+        }
       },
+      
     });
     return this.login(user);
   }

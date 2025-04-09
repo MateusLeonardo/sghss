@@ -1,5 +1,5 @@
 @sghss_HostAddress = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzQ0MTMwMzIyLCJleHAiOjE3NDQxMzM5MjJ9.ev-izTc3oZdnsvud-EggTV9E1LLNG_GjhTvNOxYQhc4
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlNUBnbWFpbC5jb20iLCJzdWIiOjQsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzQ0MTYyODYzLCJleHAiOjE3NDQxNjY0NjN9.dAQKXO0n6flFgB6rcm6p3ynp9m3sgPvkWSOIgkipMPw
 
 ### REGISTER
 POST {{sghss_HostAddress}}/auth/register
@@ -7,7 +7,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-   "email": "teste@gmail.com",
+   "email": "teste5@gmail.com",
    "password": "teste"
 }
 
@@ -18,7 +18,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-   "email": "teste@gmail.com",
+   "email": "teste1@gmail.com",
    "password": "teste"
 }
 
