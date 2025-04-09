@@ -1,5 +1,6 @@
 @sghss_HostAddress = http://localhost:3000
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzQ0MTMwMzIyLCJleHAiOjE3NDQxMzM5MjJ9.ev-izTc3oZdnsvud-EggTV9E1LLNG_GjhTvNOxYQhc4
+
 ### REGISTER
 POST {{sghss_HostAddress}}/auth/register
 Accept: application/json
@@ -56,5 +57,11 @@ Content-Type: application/json
 
 ### USERS - DELETE
 DELETE {{sghss_HostAddress}}/users/1
+Accept: application/json
+Content-Type: application/json
+
+
+### PATIENTS - CREATE
+POST {{sghss_HostAddress}}/patients
 Accept: application/json
 Content-Type: application/json

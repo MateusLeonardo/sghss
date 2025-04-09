@@ -6,25 +6,36 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
-    const user = await this.prismaService.user.findUnique({
+  async create({ email, cpf, password, role }: CreateUserDto) {
+    const existingUser = await this.prismaService.user.findFirst({
       where: {
-        email: createUserDto.email,
-        cpf: createUserDto.cpf,
+        OR: [{ email }, { cpf }],
       },
     });
 
-    if (user) {
+    if (existingUser) {
       throw new ConflictException('User already exists');
     }
+
+    const hashedPassword = await bcrypt.hash(password, await bcrypt.genSalt());
+
     const newUser = await this.prismaService.user.create({
-      data: createUserDto,
+      data: {
+        email,
+        cpf,
+        password: hashedPassword,
+        role,
+      },
     });
+    const { password: _, ...result } = newUser;
+
+    return result;
   }
 
   findAll() {
@@ -58,12 +69,15 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
     const updateUser = await this.prismaService.user.update({
       where: {
         id,
       },
       data: updateUserDto,
     });
+    const { password, ...result } = updateUser;
+    return result;
   }
 
   async remove(id: number) {
@@ -76,10 +90,12 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    await this.prismaService.user.delete({
+    const deletedUser = await this.prismaService.user.delete({
       where: {
         id,
       },
     });
+    const { password, ...result } = deletedUser;
+    return result;
   }
 }
