@@ -32,11 +32,19 @@ export class PatientsService {
   }
 
   findAll() {
-    return `This action returns all patients`;
+    return this.prismaService.patient.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patient`;
+  async findOne(id: number) {
+    const patient = await this.prismaService.patient.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!patient) {
+      throw new BadRequestException('Patient not found');
+    }
+    return patient;
   }
 
   update(id: number, updatePatientDto: UpdatePatientDto) {
