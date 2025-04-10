@@ -42,7 +42,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 ### USERS - GET ONE
-GET {{sghss_HostAddress}}/users/1
+GET {{sghss_HostAddress}}/users/7
 Accept: application/json
 Content-Type: application/json
 
@@ -65,3 +65,13 @@ Content-Type: application/json
 POST {{sghss_HostAddress}}/patients
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+   "email": "mateus_leonardo1997@hotmail.com",
+   "password": "12345",
+   "name": "Mateus Leonardo dos Santos Sensão",
+   "role": "PATIENT",
+   "cpf": "45885434824",
+   "bloodType": "O+"
+}

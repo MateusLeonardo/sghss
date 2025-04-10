@@ -49,10 +49,9 @@ export class AuthService {
         password: passwordHashed,
         role: 'PATIENT',
         patientProfile: {
-          create: {}
-        }
+          create: {},
+        },
       },
-      
     });
     return this.login(user);
   }

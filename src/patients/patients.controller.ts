@@ -15,7 +15,7 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { UserDecorator } from 'src/decorators/user.decorator';
 import { User } from '@prisma/client';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller('patients')
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}

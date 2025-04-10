@@ -12,7 +12,7 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create({ email, cpf, password, role }: CreateUserDto) {
+  async create({ email, cpf, password, role, name }: CreateUserDto) {
     const existingUser = await this.prismaService.user.findFirst({
       where: {
         OR: [{ email }, { cpf }],
@@ -31,6 +31,7 @@ export class UsersService {
         cpf,
         password: hashedPassword,
         role,
+        name,
       },
     });
     const { password: _, ...result } = newUser;
