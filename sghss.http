@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 ### USERS - DELETE
-DELETE {{sghss_HostAddress}}/users/1
+DELETE {{sghss_HostAddress}}/users/9
 Accept: application/json
 Content-Type: application/json
 
@@ -65,13 +65,12 @@ Content-Type: application/json
 POST {{sghss_HostAddress}}/patients
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer {{ token }}
+# Authorization: Bearer {{ token }}
 
 {
-   "email": "mateus_leonardo1997@hotmail.com",
+   "email": "mateus_leonardo19972@hotmail.com",
    "password": "12345",
    "name": "Mateus Leonardo dos Santos Sensão",
-   "role": "PATIENT",
-   "cpf": "45885434824",
+   "cpf": "44939438074",
    "bloodType": "O+"
 }

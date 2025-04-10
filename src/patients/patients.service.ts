@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UsersService } from 'src/users/users.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class PatientsService {
@@ -14,7 +15,10 @@ export class PatientsService {
   async create(createPatientDto: CreatePatientDto) {
     const { bloodType, allergies, medications, ...userData } = createPatientDto;
 
-    const user = await this.usersService.create(userData);
+    const user = await this.usersService.create({
+      ...userData,
+      role: Role.PATIENT,
+    });
 
     const patient = await this.prismaService.patient.create({
       data: {
