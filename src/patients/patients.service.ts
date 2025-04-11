@@ -47,8 +47,32 @@ export class PatientsService {
     return patient;
   }
 
-  update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} patient`;
+  async update(id: number, updatePatientDto: UpdatePatientDto) {
+    const patientExists = await this.prismaService.patient.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!patientExists) {
+      throw new BadRequestException('Patient not found');
+    }
+    const { bloodType, allergies, medications, ...userData } = updatePatientDto;
+
+    await this.usersService.update(id, {
+      ...userData,
+    });
+
+    return this.prismaService.patient.update({
+      where: {
+        id,
+      },
+      data: {
+        bloodType,
+        allergies,
+        medications,
+        updatedAt: new Date(),
+      },
+    });
   }
 
   remove(id: number) {
