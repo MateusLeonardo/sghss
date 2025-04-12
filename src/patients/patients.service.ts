@@ -75,7 +75,19 @@ export class PatientsService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} patient`;
+  async remove(id: number) {
+    const patientExists = await this.prismaService.patient.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!patientExists) throw new BadRequestException('Patient not found');
+
+    return this.prismaService.patient.delete({
+      where: {
+        id
+      }
+    })
   }
 }
