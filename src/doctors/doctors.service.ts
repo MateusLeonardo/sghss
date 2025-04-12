@@ -61,7 +61,7 @@ export class DoctorsService {
 
     const { crm, specialty, ...userData } = updateDoctorDto;
 
-    const updatedUser = await this.usersService.update(doctorExists.userId, {
+    await this.usersService.update(doctorExists.userId, {
       ...userData,
     });
 
