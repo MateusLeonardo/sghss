@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { UsersService } from 'src/users/users.service';
@@ -42,7 +42,7 @@ export class PatientsService {
       },
     });
     if (!patient) {
-      throw new BadRequestException('Patient not found');
+      throw new NotFoundException('Patient not found');
     }
     return patient;
   }
@@ -54,11 +54,11 @@ export class PatientsService {
       },
     });
     if (!patientExists) {
-      throw new BadRequestException('Patient not found');
+      throw new NotFoundException('Patient not found');
     }
     const { bloodType, allergies, medications, ...userData } = updatePatientDto;
 
-    await this.usersService.update(id, {
+    await this.usersService.update(patientExists.userId, {
       ...userData,
     });
 
@@ -82,7 +82,7 @@ export class PatientsService {
       },
     })
 
-    if (!patientExists) throw new BadRequestException('Patient not found');
+    if (!patientExists) throw new NotFoundException('Patient not found');
 
     return this.prismaService.patient.delete({
       where: {
