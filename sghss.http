@@ -68,9 +68,74 @@ Content-Type: application/json
 # Authorization: Bearer {{ token }}
 
 {
-   "email": "mateus_leonardo19972@hotmail.com",
+   "email": "mateus_leonardo19976@hotmail.com",
    "password": "12345",
    "name": "Mateus Leonardo dos Santos Sensão",
-   "cpf": "44939438074",
-   "bloodType": "O+"
+   "cpf": "49061545064",
+   "bloodType": "O+",
 }
+
+### PATIENTS - GET ALL
+GET {{sghss_HostAddress}}/patients
+Accept: application/json
+Content-Type: application/json
+
+### PATIENTS - GET ONE
+GET {{sghss_HostAddress}}/patients/1312
+Accept: application/json
+Content-Type: application/json
+
+### PATIENTS - UPDATE
+PATCH  {{sghss_HostAddress}}/patients/13
+Accept: application/json
+Content-Type: application/json
+
+{
+   "allergies": "Dipirona"
+}
+
+### PATIENTS - DELETE
+DELETE {{sghss_HostAddress}}/patients/9
+Accept: application/json
+Content-Type: application/json
+
+
+### DOCTORS - CREATE
+POST {{sghss_HostAddress}}/doctors
+Accept: application/json
+Content-Type: application/json
+# Authorization: Bearer {{ token }}
+
+{
+   "email": "mateus_leonardo19974@hotmail.com",
+   "password": "12345",
+   "name": "Mateus Leonardo doutor",
+   "cpf": "98742140072",
+   "crm": "1234513",
+   "specialty": "Cirurgiao"
+
+}
+
+### DOCTORS - GET ALL
+GET {{sghss_HostAddress}}/doctors
+Accept: application/json
+Content-Type: application/json
+
+### DOCTORS - GET ONE
+GET {{sghss_HostAddress}}/doctors/
+Accept: application/json
+Content-Type: application/json
+
+### DOCTORS - UPDATE
+PATCH  {{sghss_HostAddress}}/doctors/13
+Accept: application/json
+Content-Type: application/json
+
+{
+   "allergies": "Dipirona"
+}
+
+### DOCTORS - DELETE
+DELETE {{sghss_HostAddress}}/doctors/2
+Accept: application/json
+Content-Type: application/json
