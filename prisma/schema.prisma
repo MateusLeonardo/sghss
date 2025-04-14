@@ -13,6 +13,14 @@ enum Role {
   PATIENT
 }
 
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  MISSED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -60,13 +68,13 @@ model Doctor {
 }
 
 model Appointment {
-  id        Int      @id @default(autoincrement())
+  id        Int               @id @default(autoincrement())
   patientId Int
   doctorId  Int
   date      DateTime
-  status    String   @default("PENDING")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status    AppointmentStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 
   patient User @relation("PatientAppointments", fields: [patientId], references: [id])
   doctor  User @relation("DoctorAppointments", fields: [doctorId], references: [id])
