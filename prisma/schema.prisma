@@ -11,6 +11,7 @@ enum Role {
   ADMIN
   DOCTOR
   PATIENT
+  ATTENDANT
 }
 
 enum AppointmentStatus {
@@ -34,6 +35,7 @@ model User {
   // Relacionamentos
   patientProfile        Patient?
   doctorProfile         Doctor?
+  attendantProfile      Attendant?
   doctorAppointments    Appointment[]   @relation("DoctorAppointments")
   patientAppointments   Appointment[]   @relation("PatientAppointments")
   doctorMedicalRecords  MedicalRecord[] @relation("DoctorMedicalRecords")
@@ -67,18 +69,41 @@ model Doctor {
   @@map("doctors")
 }
 
+model Attendant {
+  id                  Int           @id @default(autoincrement())
+  userId              Int           @unique
+  user                User          @relation(fields: [userId], references: [id])
+  createdAppointments Appointment[] @relation("AttendantAppointments")
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  isActive            Boolean       @default(true)
+  department          String?
+
+  @@map("attendants")
+}
+
 model Appointment {
-  id        Int               @id @default(autoincrement())
-  patientId Int
-  doctorId  Int
-  date      DateTime
-  status    AppointmentStatus @default(PENDING)
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  id          Int               @id @default(autoincrement())
+  patientId   Int
+  doctorId    Int
+  attendantId Int?
+  date        DateTime
+  status      AppointmentStatus @default(PENDING)
+  reason      String?
+  notes       String?
+  duration    Int               @default(30)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
-  patient User @relation("PatientAppointments", fields: [patientId], references: [id])
-  doctor  User @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  patient   User       @relation("PatientAppointments", fields: [patientId], references: [id])
+  doctor    User       @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  attendant Attendant? @relation("AttendantAppointments", fields: [attendantId], references: [id])
 
+  @@index([patientId])
+  @@index([doctorId])
+  @@index([attendantId])
+  @@index([date])
+  @@index([status])
   @@map("appointments")
 }
 
@@ -95,5 +120,7 @@ model MedicalRecord {
   patient User @relation("PatientMedicalRecords", fields: [patientId], references: [id])
   doctor  User @relation("DoctorMedicalRecords", fields: [doctorId], references: [id])
 
+  @@index([patientId])
+  @@index([doctorId])
   @@map("medical_records")
 }
