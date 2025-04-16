@@ -1,26 +1,80 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAttendantDto } from './dto/create-attendant.dto';
 import { UpdateAttendantDto } from './dto/update-attendant.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AttendantsService {
-  create(createAttendantDto: CreateAttendantDto) {
-    return 'This action adds a new attendant';
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly usersService: UsersService,
+  ) {}
+  async create({ accessCode, ...user }: CreateAttendantDto) {
+    const userExists = await this.prismaService.user.findUnique({
+      where: {
+        email: user.email,
+      },
+    });
+
+    if (userExists) throw new ConflictException('User already exists');
+
+    const { id } = await this.usersService.create(user);
+
+    return this.prismaService.attendant.create({
+      data: {
+        accessCode,
+        userId: id,
+      },
+    });
   }
 
   findAll() {
-    return `This action returns all attendants`;
+    return this.prismaService.attendant.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} attendant`;
+  async findOne(id: number) {
+    const attendant = await this.prismaService.attendant.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!attendant) throw new NotFoundException('Attendant not found');
+    return attendant;
   }
 
-  update(id: number, updateAttendantDto: UpdateAttendantDto) {
-    return `This action updates a #${id} attendant`;
+  async update(id: number, { accessCode, ...user }: UpdateAttendantDto) {
+    const patientExists = await this.prismaService.attendant.findUnique({
+      where: { id },
+    });
+    if (!patientExists) throw new NotFoundException('Attendant not found');
+
+    // await this.usersService.update(patientExists.userId, user)
+    return this.prismaService.attendant.update({
+      where: { id },
+      data: {
+        accessCode,
+        user: {
+          update: {
+            ...user,
+          },
+        },
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} attendant`;
+  async remove(id: number) {
+    const attendantExists = await this.prismaService.attendant.findUnique({
+      where: { id },
+    });
+    if (!attendantExists) throw new NotFoundException('Attendant not found');
+
+    return this.prismaService.attendant.delete({
+      where: { id },
+    });
   }
 }
