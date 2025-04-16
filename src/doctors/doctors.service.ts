@@ -51,14 +51,12 @@ export class DoctorsService {
     return doctor;
   }
 
-  async update(id: number, updateDoctorDto: UpdateDoctorDto) {
+  async update(id: number, {crm, specialty, ...userData}: UpdateDoctorDto) {
     const doctorExists = await this.prismaService.doctor.findUnique({
       where: { id },
     });
 
     if (!doctorExists) throw new NotFoundException('Doctor not found');
-
-    const { crm, specialty, ...userData } = updateDoctorDto;
 
     await this.usersService.update(doctorExists.userId, {
       ...userData,
