@@ -80,14 +80,14 @@ export class PatientsService {
       where: {
         id,
       },
-    })
+    });
 
     if (!patientExists) throw new NotFoundException('Patient not found');
 
     return this.prismaService.patient.delete({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
 }

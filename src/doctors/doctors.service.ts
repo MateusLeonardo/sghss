@@ -1,7 +1,7 @@
 import {
   ConflictException,
   Injectable,
-  NotFoundException
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
@@ -51,7 +51,7 @@ export class DoctorsService {
     return doctor;
   }
 
-  async update(id: number, {crm, specialty, ...userData}: UpdateDoctorDto) {
+  async update(id: number, { crm, specialty, ...userData }: UpdateDoctorDto) {
     const doctorExists = await this.prismaService.doctor.findUnique({
       where: { id },
     });

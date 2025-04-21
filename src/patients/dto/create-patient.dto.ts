@@ -4,7 +4,7 @@ import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { BloodType } from 'src/enums/blood-type.enum';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
-export class CreatePatientDto extends CreateUserDto{
+export class CreatePatientDto extends CreateUserDto {
   @IsEnum(Role)
   role: Role = Role.PATIENT;
 

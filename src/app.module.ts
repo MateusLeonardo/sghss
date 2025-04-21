@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PatientsModule } from './patients/patients.module';
 import { DoctorsModule } from './doctors/doctors.module';
 import { AttendantsModule } from './attendants/attendants.module';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AttendantsModule } from './attendants/attendants.module';
     PatientsModule,
     DoctorsModule,
     AttendantsModule,
+    AppointmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
