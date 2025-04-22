@@ -1,5 +1,5 @@
 @sghss_HostAddress = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlNUBnbWFpbC5jb20iLCJzdWIiOjQsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzQ0MTYyODYzLCJleHAiOjE3NDQxNjY0NjN9.dAQKXO0n6flFgB6rcm6p3ynp9m3sgPvkWSOIgkipMPw
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhZmFlbGFfbW9yZW5vQGhvdG1haWwuY29tIiwic3ViIjoxOCwicm9sZSI6IkFUVEVOREFOVCIsImlhdCI6MTc0NTI1NzgxNSwiZXhwIjoxNzQ1MjYxNDE1fQ._Pt601YJLfVPpynLk0M9R--0T22tGUouD8J0JJSq0SQ
 
 ### REGISTER
 POST {{sghss_HostAddress}}/auth/register
@@ -18,8 +18,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-   "email": "teste1@gmail.com",
-   "password": "teste"
+   "email": "rafaela_moreno@hotmail.com",
+   "password": "12345"
 }
 
 ### USERS - CREATE
@@ -137,5 +137,85 @@ Content-Type: application/json
 
 ### DOCTORS - DELETE
 DELETE {{sghss_HostAddress}}/doctors/2
+Accept: application/json
+Content-Type: application/json
+
+
+### ATTENDANTS - CREATE
+POST {{sghss_HostAddress}}/attendants
+Accept: application/json
+Content-Type: application/json
+# Authorization: Bearer {{ token }}
+
+{
+   "email": "rafaela_moreno@hotmail.com",
+   "password": "12345",
+   "name": "Rafaela Moreno",
+   "cpf": "75068566039",
+   "accessCode": "123456",
+   "role": "ATTENDANT"
+}
+
+### ATTENDANTS - GET ALL
+GET {{sghss_HostAddress}}/attendants
+Accept: application/json
+Content-Type: application/json
+
+### ATTENDANTS - GET ONE
+GET {{sghss_HostAddress}}/attendants/1
+Accept: application/json
+Content-Type: application/json
+
+### ATTENDANTS - UPDATE
+PATCH  {{sghss_HostAddress}}/attendants/13
+Accept: application/json
+Content-Type: application/json
+
+{
+   "allergies": "Dipirona"
+}
+
+### ATTENDANTS - DELETE
+DELETE {{sghss_HostAddress}}/attendants/2
+Accept: application/json
+Content-Type: application/json
+
+
+### APPOINTMENTS - CREATE
+POST {{sghss_HostAddress}}/appointments
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+   "doctorId": ,
+   "attendantId": ,
+   "patientId": ,
+   "date": ,
+   "duration": ,
+}
+
+### APPOINTMENTS - GET ALL
+GET {{sghss_HostAddress}}/appointments
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+### APPOINTMENTS - GET ONE
+GET {{sghss_HostAddress}}/appointments/1
+Accept: application/json
+Content-Type: application/json
+
+### APPOINTMENTS - UPDATE
+PATCH  {{sghss_HostAddress}}/appointments/13
+Accept: application/json
+Content-Type: application/json
+
+{
+   "allergies": "Dipirona"
+}
+
+### APPOINTMENTS - DELETE
+DELETE {{sghss_HostAddress}}/appointments/2
 Accept: application/json
 Content-Type: application/json
