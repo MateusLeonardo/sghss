@@ -2,10 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { User } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AppointmentsService {
-  async create({id}: User, createAppointmentDto: CreateAppointmentDto) {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async create({ id }: User, createAppointmentDto: CreateAppointmentDto) {
     // todo: verificar se o paciente existe
     // todo: verificar se o doutor existe
     // todo: verificar se o paciente já tem consulta marcada para o mesmo dia e horário
