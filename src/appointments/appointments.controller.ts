@@ -6,18 +6,23 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { UserDecorator } from 'src/decorators/user.decorator';
+import { User } from '@prisma/client';
 
 @Controller('appointments')
+@UseGuards(JwtAuthGuard)
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Post()
-  create(@Body() createAppointmentDto: CreateAppointmentDto) {
-    return this.appointmentsService.create(createAppointmentDto);
+  create(@UserDecorator() user: User, @Body() createAppointmentDto: CreateAppointmentDto) {
+    return this.appointmentsService.create(user, createAppointmentDto);
   }
 
   @Get()

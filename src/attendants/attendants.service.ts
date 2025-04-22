@@ -7,6 +7,7 @@ import { CreateAttendantDto } from './dto/create-attendant.dto';
 import { UpdateAttendantDto } from './dto/update-attendant.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UsersService } from 'src/users/users.service';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class AttendantsService {
@@ -23,7 +24,10 @@ export class AttendantsService {
 
     if (userExists) throw new ConflictException('User already exists');
 
-    const { id } = await this.usersService.create(user);
+    const { id } = await this.usersService.create({
+      ...user,
+      role: Role.ATTENDANT,
+    });
 
     return this.prismaService.attendant.create({
       data: {
