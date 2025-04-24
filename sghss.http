@@ -1,5 +1,5 @@
 @sghss_HostAddress = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhZmFlbGFfbW9yZW5vQGhvdG1haWwuY29tIiwic3ViIjoxOCwicm9sZSI6IkFUVEVOREFOVCIsImlhdCI6MTc0NTQyNDY2NCwiZXhwIjoxNzQ1NDI4MjY0fQ.c23u5dXGDDeOLovwz0VPeme4JNjgTEkH6Ov-K9_L0mY
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhZmFlbGFfbW9yZW5vQGhvdG1haWwuY29tIiwic3ViIjoxOCwicm9sZSI6IkFUVEVOREFOVCIsImlhdCI6MTc0NTUwNDI5NCwiZXhwIjoxNzQ1NTA3ODk0fQ.VOaGL2_EVYPUkH_uE3ZHtkAffCxHXpWiWuWlIwuEM9s
 
 ### REGISTER
 POST {{sghss_HostAddress}}/auth/register
@@ -208,12 +208,13 @@ Accept: application/json
 Content-Type: application/json
 
 ### APPOINTMENTS - UPDATE
-PATCH  {{sghss_HostAddress}}/appointments/13
+PATCH  {{sghss_HostAddress}}/appointments/23
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer {{ token }}
 
 {
-   "allergies": "Dipirona"
+   "status": "CONFIRMED"
 }
 
 ### APPOINTMENTS - DELETE
