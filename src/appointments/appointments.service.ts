@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
@@ -112,18 +113,100 @@ export class AppointmentsService {
   }
 
   findAll() {
-    return `This action returns all appointments`;
+    return this.prismaService.appointment.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} appointment`;
+  async findOne(id: number) {
+    const appointment = await this.prismaService.appointment.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
-  update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    return `This action updates a #${id} appointment`;
+  async update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
+    const appointment = await this.prismaService.appointment.findUnique({
+      where: { id },
+    });
+
+    if (!appointment) {
+      throw new NotFoundException('Consulta não encontrada');
+    }
+
+    if (appointment.status === 'CANCELLED') {
+      throw new BadRequestException(
+        'Não é possível editar uma consulta cancelada',
+      );
+    }
+
+    if (
+      updateAppointmentDto.patientId &&
+      appointment.patientId !== updateAppointmentDto.patientId
+    ) {
+      throw new BadRequestException(
+        'Não é possível transferir consulta para outro paciente',
+      );
+    }
+
+    if (
+      updateAppointmentDto.date &&
+      new Date(updateAppointmentDto.date) < new Date()
+    ) {
+      throw new BadRequestException('Não é possível agendar para o passado');
+    }
+
+    if (updateAppointmentDto.duration && updateAppointmentDto.duration <= 0) {
+      throw new BadRequestException('Duração deve ser maior que zero');
+    }
+
+    const doctorId = updateAppointmentDto.doctorId || appointment.doctorId;
+    const date = updateAppointmentDto.date
+      ? new Date(updateAppointmentDto.date)
+      : new Date(appointment.date);
+    const duration = updateAppointmentDto.duration || appointment.duration;
+    const endTime = new Date(date);
+    endTime.setMinutes(endTime.getMinutes() + duration);
+
+    const conflicts = await this.prismaService.appointment.findMany({
+      where: {
+        doctorId,
+        id: { not: id },
+        date: { lt: endTime },
+        OR: [
+          { date: { gte: date } },
+          {
+            date: { lt: date },
+            duration: {
+              gt: this.minutesBetween(date, new Date(appointment.date)),
+            },
+          },
+        ],
+      },
+    });
+
+    if (conflicts.length > 0) {
+      throw new ConflictException('Médico já possui consulta neste horário');
+    }
+
+    return this.prismaService.appointment.update({
+      where: { id },
+      data: updateAppointmentDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} appointment`;
+  async remove(id: number) {
+    const appointment = await this.prismaService.appointment.findUnique({
+      where: { id },
+    });
+
+    if (!appointment) {
+      throw new NotFoundException('Consulta não encontrada');
+    }
+    
+    //melhorar validação
+
+    return this.prismaService.appointment.delete({
+      where: { id },
+    })
   }
 }
