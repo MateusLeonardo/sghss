@@ -122,6 +122,11 @@ export class AppointmentsService {
         id,
       },
     });
+
+    if(!appointment) {
+      throw new NotFoundException('Consulta não encontrada');
+    }
+    return appointment;
   }
 
   async update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
