@@ -34,5 +34,6 @@ export class CreateAppointmentDto {
   reason?: string;
 
   @IsNumber()
+  @IsOptional()
   duration: number;
 }
