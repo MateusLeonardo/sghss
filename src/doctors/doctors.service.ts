@@ -37,6 +37,17 @@ export class DoctorsService {
     });
   }
 
+  async findByUserId(userId: number) {
+    const doctor = await this.prismaService.doctor.findUnique({
+      where: {
+        userId
+      }
+    })
+
+    if (!doctor) throw new NotFoundException('Doctor not found')
+    return doctor
+  }
+
   findAll() {
     return this.prismaService.doctor.findMany();
   }
