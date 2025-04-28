@@ -43,7 +43,7 @@ export class AppointmentsService {
 
       const conflictingPatientAppointments = await prisma.appointment.findMany({
         where: {
-          patientId: patient.userId,
+          patientId: patient.id,
           date: { lt: appointmentEndTime },
           OR: [
             {
@@ -63,7 +63,7 @@ export class AppointmentsService {
 
       const conflictingDoctorAppointments = await prisma.appointment.findMany({
         where: {
-          doctorId: doctor.userId,
+          doctorId: doctor.id,
           date: { lt: appointmentEndTime },
           OR: [
             {
@@ -100,8 +100,8 @@ export class AppointmentsService {
           reason: createAppointmentDto.reason,
           notes: createAppointmentDto.notes,
           duration: duration || 30,
-          patientId: patient.userId,
-          doctorId: doctor.userId,
+          patientId: patient.id,
+          doctorId: doctor.id,
           attendantId: attendant?.id,
         },
       });
