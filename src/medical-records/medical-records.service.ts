@@ -14,22 +14,21 @@ export class MedicalRecordsService {
     private readonly patientsService: PatientsService,
   ) {}
   async create(user: User, createMedicalRecordDto: CreateMedicalRecordDto) {
-    const doctor = await this.doctorsService.findByUserId(user.id);
-    const patient = await this.patientsService.findOne(
+     const doctor = await this.doctorsService.findByUserId(user.id);
+     await this.patientsService.findOne(
       createMedicalRecordDto.patientId,
     );
 
     return this.prismaService.medicalRecord.create({
       data: {
         ...createMedicalRecordDto,
-        doctorId: doctor.id,
-        patientId: patient.id,
+        doctorId: doctor.id
       },
     });
   }
 
   findAll() {
-    return `This action returns all medicalRecords`;
+    return this.prismaService.medicalRecord.findMany();
   }
 
   findOne(id: number) {

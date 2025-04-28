@@ -4,9 +4,6 @@ export class CreateMedicalRecordDto {
     @IsNumber()
     patientId: number;
 
-    @IsNumber()
-    doctorId: number;
-
     @IsString()
     diagnosis: string;
 
