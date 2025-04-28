@@ -48,7 +48,7 @@ export class AuthService {
         email,
         password: passwordHashed,
         role: 'PATIENT',
-        patientProfile: {
+        patient: {
           create: {},
         },
       },
