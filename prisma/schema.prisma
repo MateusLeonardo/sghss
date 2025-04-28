@@ -32,14 +32,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relacionamentos
-  patientProfile        Patient?
-  doctorProfile         Doctor?
-  attendantProfile      Attendant?
-  doctorAppointments    Appointment[]   @relation("DoctorAppointments")
-  patientAppointments   Appointment[]   @relation("PatientAppointments")
-  doctorMedicalRecords  MedicalRecord[] @relation("DoctorMedicalRecords")
-  patientMedicalRecords MedicalRecord[] @relation("PatientMedicalRecords")
+  patient   Patient?
+  doctor    Doctor?
+  attendant Attendant?
 
   @@map("users")
 }
@@ -54,6 +49,9 @@ model Patient {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  appointments   Appointment[]
+  medicalRecords MedicalRecord[]
+
   @@map("patients")
 }
 
@@ -66,17 +64,21 @@ model Doctor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  appointments   Appointment[]
+  medicalRecords MedicalRecord[]
+
   @@map("doctors")
 }
 
 model Attendant {
-  id                  Int           @id @default(autoincrement())
-  userId              Int           @unique
-  user                User          @relation(fields: [userId], references: [id])
-  accessCode          String?       @unique
-  createdAppointments Appointment[] @relation("AttendantAppointments")
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  user       User     @relation(fields: [userId], references: [id])
+  accessCode String?  @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  appointments Appointment[] @relation("AttendantAppointments")
 
   @@map("attendants")
 }
@@ -94,8 +96,8 @@ model Appointment {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 
-  patient   User       @relation("PatientAppointments", fields: [patientId], references: [id])
-  doctor    User       @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  patient   Patient    @relation(fields: [patientId], references: [id])
+  doctor    Doctor     @relation(fields: [doctorId], references: [id])
   attendant Attendant? @relation("AttendantAppointments", fields: [attendantId], references: [id])
 
   @@index([patientId])
@@ -115,9 +117,10 @@ model MedicalRecord {
   prescription String?
   notes        String?
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  patient User @relation("PatientMedicalRecords", fields: [patientId], references: [id])
-  doctor  User @relation("DoctorMedicalRecords", fields: [doctorId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
 
   @@index([patientId])
   @@index([doctorId])
