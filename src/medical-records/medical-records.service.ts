@@ -47,7 +47,15 @@ export class MedicalRecordsService {
     return `This action updates a #${id} medicalRecord`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} medicalRecord`;
+  async remove(id: number) {
+    const medicalRecord = await this.prismaService.medicalRecord.findUnique({
+      where: {id},
+    })
+    if(!medicalRecord) {
+      throw new NotFoundException("Medical record not found");
+    }
+    return this.prismaService.medicalRecord.delete({
+      where: {id},
+    })
   }
 }
