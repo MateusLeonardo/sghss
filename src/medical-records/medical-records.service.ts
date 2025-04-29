@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMedicalRecordDto } from './dto/create-medical-record.dto';
 import { UpdateMedicalRecordDto } from './dto/update-medical-record.dto';
 import { User } from '@prisma/client';
@@ -31,8 +31,16 @@ export class MedicalRecordsService {
     return this.prismaService.medicalRecord.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} medicalRecord`;
+  async findOne(id: number) {
+    const medicalRecord = await this.prismaService.medicalRecord.findUnique({
+      where: {id},
+    })
+    
+    if(!medicalRecord) {
+      throw new NotFoundException("Medical record not found");
+    }
+
+    return medicalRecord;
   }
 
   update(id: number, updateMedicalRecordDto: UpdateMedicalRecordDto) {
