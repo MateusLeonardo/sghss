@@ -41,8 +41,17 @@ export class MedicalRecordsService {
     return medicalRecord;
   }
 
-  update(id: number, updateMedicalRecordDto: UpdateMedicalRecordDto) {
-    return `This action updates a #${id} medicalRecord`;
+  async update(id: number, updateMedicalRecordDto: UpdateMedicalRecordDto) {
+    const medicalRecord = await this.prismaService.medicalRecord.findUnique({
+      where: { id },
+    });
+    if (!medicalRecord) {
+      throw new NotFoundException('Medical record not found');
+    }
+    return this.prismaService.medicalRecord.update({
+      where: { id },
+      data: updateMedicalRecordDto,
+    });
   }
 
   async remove(id: number) {
