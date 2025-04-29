@@ -14,15 +14,13 @@ export class MedicalRecordsService {
     private readonly patientsService: PatientsService,
   ) {}
   async create(user: User, createMedicalRecordDto: CreateMedicalRecordDto) {
-     const doctor = await this.doctorsService.findByUserId(user.id);
-     await this.patientsService.findOne(
-      createMedicalRecordDto.patientId,
-    );
+    const doctor = await this.doctorsService.findByUserId(user.id);
+    await this.patientsService.findOne(createMedicalRecordDto.patientId);
 
     return this.prismaService.medicalRecord.create({
       data: {
         ...createMedicalRecordDto,
-        doctorId: doctor.id
+        doctorId: doctor.id,
       },
     });
   }
@@ -33,11 +31,11 @@ export class MedicalRecordsService {
 
   async findOne(id: number) {
     const medicalRecord = await this.prismaService.medicalRecord.findUnique({
-      where: {id},
-    })
-    
-    if(!medicalRecord) {
-      throw new NotFoundException("Medical record not found");
+      where: { id },
+    });
+
+    if (!medicalRecord) {
+      throw new NotFoundException('Medical record not found');
     }
 
     return medicalRecord;
@@ -49,13 +47,13 @@ export class MedicalRecordsService {
 
   async remove(id: number) {
     const medicalRecord = await this.prismaService.medicalRecord.findUnique({
-      where: {id},
-    })
-    if(!medicalRecord) {
-      throw new NotFoundException("Medical record not found");
+      where: { id },
+    });
+    if (!medicalRecord) {
+      throw new NotFoundException('Medical record not found');
     }
     return this.prismaService.medicalRecord.delete({
-      where: {id},
-    })
+      where: { id },
+    });
   }
 }
