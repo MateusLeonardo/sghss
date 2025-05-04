@@ -14,9 +14,11 @@ import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { UserDecorator } from 'src/decorators/user.decorator';
 import { User } from '@prisma/client';
+import { PermissionsGuard } from 'src/guards/permissions.guard';
+import { Permissions } from 'src/decorators/permissions.decorator';
 
 @Controller('appointments')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, PermissionsGuard)
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
@@ -26,11 +28,13 @@ export class AppointmentsController {
   }
 
   @Get()
+  @Permissions('read', 'Appointment')
   findAll() {
     return this.appointmentsService.findAll();
   }
 
   @Get(':id')
+  @Permissions('read', 'Appointment')
   findOne(@Param('id') id: string) {
     return this.appointmentsService.findOne(+id);
   }
