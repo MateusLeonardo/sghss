@@ -10,29 +10,25 @@ export class PermissionsGuard implements CanActivate {
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    // Obter os metadados de permissões definidos pelo decorador
     const requiredPermission = this.reflector.get<{ action: string, resource: string }>('permissions', context.getHandler());
 
     if (!requiredPermission) {
-      return true; // Se não houver permissões definidas, a rota está aberta
+      return true; 
     }
 
     const { action, resource } = requiredPermission;
 
-    // Garantir que o resource seja do tipo PermissionResource
     const resourceTyped = resource as PermissionResource;
 
     const request = context.switchToHttp().getRequest();
-    const user = request.user; // O usuário autenticado
+    const user = request.user; 
 
     if (!user) {
       throw new ForbiddenException('Usuário não encontrado.');
     }
-
-    // Criar a habilidade (ability) do usuário
+    
     const ability = this.caslAbilityService.createForUser(user);
-
-    // Verificar se o usuário tem permissão para realizar a ação no recurso
+    
     if (!ability.can(action as PermActions, resourceTyped)) {
       throw new ForbiddenException('Você não tem permissão para acessar este recurso.');
     }
