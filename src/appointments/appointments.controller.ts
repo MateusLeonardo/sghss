@@ -26,9 +26,14 @@ export class AppointmentsController {
 
   @Post()
   @Roles('ADMIN', 'ATTENDANT')
-  create(@UserDecorator() user: User, @Body() createAppointmentDto: CreateAppointmentDto) {
+  @Permissions('create', 'Appointment')
+  create(
+    @UserDecorator() user: User,
+    @Body() createAppointmentDto: CreateAppointmentDto,
+  ) {
     return this.appointmentsService.create(user, createAppointmentDto);
   }
+
   @Get()
   @Roles('ADMIN', 'ATTENDANT')
   @Permissions('read', 'Appointment')
@@ -45,6 +50,7 @@ export class AppointmentsController {
 
   @Patch(':id')
   @Roles('ADMIN', 'ATTENDANT', 'DOCTOR')
+  @Permissions('update', 'Appointment')
   update(
     @Param('id') id: string,
     @Body() updateAppointmentDto: UpdateAppointmentDto,
@@ -54,6 +60,7 @@ export class AppointmentsController {
 
   @Delete(':id')
   @Roles('ADMIN')
+  @Permissions('delete', 'Appointment')
   remove(@Param('id') id: string) {
     return this.appointmentsService.remove(+id);
   }

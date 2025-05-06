@@ -16,14 +16,17 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { UserDecorator } from 'src/decorators/user.decorator';
 import { User } from '@prisma/client';
+import { PermissionsGuard } from 'src/guards/permissions.guard';
+import { Permissions } from 'src/decorators/permissions.decorator';
 
 @Controller('medical-records')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
 export class MedicalRecordsController {
   constructor(private readonly medicalRecordsService: MedicalRecordsService) {}
 
   @Post()
   @Roles('ADMIN', 'DOCTOR')
+  @Permissions('create', 'MedicalRecord')
   create(
     @UserDecorator() user: User,
     @Body() createMedicalRecordDto: CreateMedicalRecordDto,
@@ -33,18 +36,21 @@ export class MedicalRecordsController {
 
   @Get()
   @Roles('ADMIN')
+  @Permissions('read', 'MedicalRecord')
   findAll() {
     return this.medicalRecordsService.findAll();
   }
 
   @Get(':id')
   @Roles('ADMIN', 'DOCTOR', 'PATIENT')
+  @Permissions('read', 'MedicalRecord')
   findOne(@Param('id') id: string) {
     return this.medicalRecordsService.findOne(+id);
   }
 
   @Patch(':id')
   @Roles('ADMIN', 'DOCTOR')
+  @Permissions('update', 'MedicalRecord')
   update(
     @Param('id') id: string,
     @Body() updateMedicalRecordDto: UpdateMedicalRecordDto,
@@ -54,6 +60,7 @@ export class MedicalRecordsController {
 
   @Delete(':id')
   @Roles('ADMIN')
+  @Permissions('delete', 'MedicalRecord')
   remove(@Param('id') id: string) {
     return this.medicalRecordsService.remove(+id);
   }

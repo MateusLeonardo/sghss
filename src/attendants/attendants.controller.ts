@@ -14,32 +14,38 @@ import { UpdateAttendantDto } from './dto/update-attendant.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
+import { PermissionsGuard } from 'src/guards/permissions.guard';
+import { Permissions } from 'src/decorators/permissions.decorator';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('attendants')
+@UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
 export class AttendantsController {
   constructor(private readonly attendantsService: AttendantsService) {}
 
-  @Roles('ADMIN')
   @Post()
+  @Roles('ADMIN')
+  @Permissions('create', 'Attendant')
   create(@Body() createAttendantDto: CreateAttendantDto) {
     return this.attendantsService.create(createAttendantDto);
   }
 
-  @Roles('ADMIN')
   @Get()
+  @Roles('ADMIN')
+  @Permissions('read', 'Attendant')
   findAll() {
     return this.attendantsService.findAll();
   }
 
-  @Roles('ADMIN', 'ATTENDANT')
   @Get(':id')
+  @Roles('ADMIN', 'ATTENDANT')
+  @Permissions('read', 'Attendant')
   findOne(@Param('id') id: string) {
     return this.attendantsService.findOne(+id);
   }
 
-  @Roles('ADMIN', 'ATTENDANT')
   @Patch(':id')
+  @Roles('ADMIN', 'ATTENDANT')
+  @Permissions('update', 'Attendant')
   update(
     @Param('id') id: string,
     @Body() updateAttendantDto: UpdateAttendantDto,
@@ -47,8 +53,9 @@ export class AttendantsController {
     return this.attendantsService.update(+id, updateAttendantDto);
   }
 
-  @Roles('ADMIN')
   @Delete(':id')
+  @Roles('ADMIN')
+  @Permissions('delete', 'Attendant')
   remove(@Param('id') id: string) {
     return this.attendantsService.remove(+id);
   }
