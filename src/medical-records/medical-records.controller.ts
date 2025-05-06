@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { MedicalRecordsService } from './medical-records.service';
 import { CreateMedicalRecordDto } from './dto/create-medical-record.dto';
 import { UpdateMedicalRecordDto } from './dto/update-medical-record.dto';
@@ -10,32 +19,41 @@ import { User } from '@prisma/client';
 
 @Controller('medical-records')
 @UseGuards(JwtAuthGuard, RolesGuard)
-
 export class MedicalRecordsController {
   constructor(private readonly medicalRecordsService: MedicalRecordsService) {}
 
-  @Roles('DOCTOR')
   @Post()
-  create(@UserDecorator() user: User, @Body() createMedicalRecordDto: CreateMedicalRecordDto) {
+  @Roles('ADMIN', 'DOCTOR')
+  create(
+    @UserDecorator() user: User,
+    @Body() createMedicalRecordDto: CreateMedicalRecordDto,
+  ) {
     return this.medicalRecordsService.create(user, createMedicalRecordDto);
   }
 
   @Get()
+  @Roles('ADMIN')
   findAll() {
     return this.medicalRecordsService.findAll();
   }
 
   @Get(':id')
+  @Roles('ADMIN', 'DOCTOR', 'PATIENT')
   findOne(@Param('id') id: string) {
     return this.medicalRecordsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMedicalRecordDto: UpdateMedicalRecordDto) {
+  @Roles('ADMIN', 'DOCTOR')
+  update(
+    @Param('id') id: string,
+    @Body() updateMedicalRecordDto: UpdateMedicalRecordDto,
+  ) {
     return this.medicalRecordsService.update(+id, updateMedicalRecordDto);
   }
 
   @Delete(':id')
+  @Roles('ADMIN')
   remove(@Param('id') id: string) {
     return this.medicalRecordsService.remove(+id);
   }

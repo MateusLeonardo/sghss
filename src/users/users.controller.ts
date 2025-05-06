@@ -13,23 +13,20 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from '@prisma/client';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { PermissionsGuard } from 'src/guards/permissions.guard';
-import { Permissions } from 'src/decorators/permissions.decorator';
 
-@UseGuards(JwtAuthGuard, PermissionsGuard)
+@UseGuards(JwtAuthGuard, RolesGuard, PermissionsGuard)
+@Roles('ADMIN')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @Permissions('create', 'User')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  // @Roles(Role.ADMIN)
   @Get()
   findAll() {
     return this.usersService.findAll();
