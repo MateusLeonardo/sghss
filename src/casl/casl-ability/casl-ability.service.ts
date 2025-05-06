@@ -25,22 +25,24 @@ const rolePermissionsMap: Record<Role, PermissionHandler> = {
   },
 
   [Role.DOCTOR]: (user, { can }) => {
-    if(!user.doctor) return;
+    if (!user.doctor) return;
     can(['read', 'update'], 'Appointment', { doctorId: user.doctor?.id });
     can('create', 'MedicalRecord');
     can(['read', 'update'], 'MedicalRecord', { doctorId: user.doctor?.id });
     can('read', 'Patient');
+    can('read', 'Doctor', { id: user.doctor?.id });
   },
 
   [Role.PATIENT]: (user, { can, cannot }) => {
-    if(!user.patient) return;
-    // can('read', 'Appointment', { patientId: user.patient?.id });
-    cannot('create', 'User')
+    if (!user.patient) return;
+    can('read', 'Appointment', { patientId: user.patient?.id });
+    can(['read', 'update'], 'Patient', { id: user.patient?.id });
+    can('read', 'MedicalRecord', { patientId: user.patient?.id });
   },
 
   [Role.ATTENDANT]: (user, { can }) => {
-    if(!user.attendant) return;
-    can(['read', 'update'], 'Appointment', { attendantId: user.attendant?.id });
+    if (!user.attendant) return;
+    can(['create','read', 'update'], 'Appointment');
     can('read', 'Patient');
   },
 };
@@ -58,7 +60,6 @@ export class CaslAbilityService {
       if (typeof conditions === 'function') return conditions(subject);
 
       return Object.keys(conditions).every((key) => {
-
         if (key.endsWith('Id') && subject[key] !== undefined) {
           return subject[key] === conditions[key];
         }
