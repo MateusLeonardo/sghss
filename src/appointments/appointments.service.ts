@@ -207,8 +207,6 @@ export class AppointmentsService {
     if (!appointment) {
       throw new NotFoundException('Consulta não encontrada');
     }
-    
-    //melhorar validação
 
     return this.prismaService.appointment.delete({
       where: { id },

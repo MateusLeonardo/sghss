@@ -40,6 +40,16 @@ export class PatientsService {
       where: {
         id,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            cpf: true,
+          },
+        },
+      },
     });
     if (!patient) {
       throw new NotFoundException('Patient not found');
