@@ -39,7 +39,7 @@ export class AuthService {
     });
 
     if (userExists) {
-      throw new ConflictException('User already exists');
+      throw new ConflictException('Email já cadastrado');
     }
 
     const passwordHashed = await bcrypt.hash(password, await bcrypt.genSalt());
