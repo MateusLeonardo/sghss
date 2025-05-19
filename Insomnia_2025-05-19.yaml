@@ -1,0 +1,984 @@
+type: collection.insomnia.rest/5.0
+name: sghss
+meta:
+  id: wrk_5707b0026ed94d0d81124a22260ba65d
+  created: 1745597725911
+  modified: 1745597725911
+collection:
+  - name: Auth
+    meta:
+      id: fld_b5b7931507dd4fee8151008696d2f7fa
+      created: 1745597746975
+      modified: 1745597746975
+      sortKey: -1745597746975
+    children:
+      - url: "{{ _.baseurl }}/auth/login"
+        name: Login
+        meta:
+          id: req_efb17c62a38a46f88f8e7de90ad38d61
+          created: 1745597750615
+          modified: 1746546507139
+          isPrivate: false
+          sortKey: -1745597763407
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "rafaela_moreno@hotmail.com",
+            	"password": "12345"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/10.1.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/auth/register"
+        name: Register
+        meta:
+          id: req_d9951a8d1b1747c2991b764fb8c79ba8
+          created: 1745845886335
+          modified: 1745845923743
+          isPrivate: false
+          sortKey: -1745597763357
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "mateus_leonardo1997@hotmail.com",
+            	"password": "12345"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/10.1.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Users
+    meta:
+      id: fld_10f296e5b46d4fb9b561f16dfe5200f1
+      created: 1745597956775
+      modified: 1745597956775
+      sortKey: -1745597956775
+    children:
+      - url: "{{ _.baseurl }}/users"
+        name: getAll
+        meta:
+          id: req_a8a47252b29a4993bf2f386383992ad5
+          created: 1745597961126
+          modified: 1745598206920
+          isPrivate: false
+          sortKey: -1745597961126
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/users/14"
+        name: getOne
+        meta:
+          id: req_3c7dcc63cf774be7865fcea455ddb4d1
+          created: 1745598217687
+          modified: 1745605236107
+          isPrivate: false
+          sortKey: -1745597862266.5
+        method: GET
+        headers:
+          - id: pair_253fcff626db45e0a8d1ae54d7b677a7
+            name: User-Agent
+            value: insomnia/11.0.2
+          - disabled: false
+            id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/users/17"
+        name: Update
+        meta:
+          id: req_60b52c1bc4c54b0dae5f1654def89600
+          created: 1745601313353
+          modified: 1745601368963
+          isPrivate: false
+          sortKey: -1745597812836.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            "email": "mateus_leonardo19979@hotmail.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/users/20"
+        name: Delete
+        meta:
+          id: req_59aefa188f8d49e0a1cc366d29be00ab
+          created: 1745601446307
+          modified: 1745846663255
+          isPrivate: false
+          sortKey: -1745597837551.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/users"
+        name: Create
+        meta:
+          id: req_ce250343c6e9499c947f0b49a81fbe9f
+          created: 1745846261751
+          modified: 1746546507139
+          isPrivate: false
+          sortKey: -1745597788121.875
+        method: POST
+        body:
+          mimeType: application/json
+        headers:
+          - name: Content-Type
+            value: application/json
+          - id: pair_253fcff626db45e0a8d1ae54d7b677a7
+            name: User-Agent
+            value: insomnia/11.0.2
+          - disabled: false
+            id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Patients
+    meta:
+      id: fld_181d52f4781e45539bac8079aeee314e
+      created: 1745601507633
+      modified: 1745601507633
+      sortKey: -1745597851875
+    children:
+      - url: "{{ _.baseurl }}/patients"
+        name: getAll
+        meta:
+          id: req_c150a300606941c1bd14dbc60cbe18ff
+          created: 1745601507635
+          modified: 1745845744892
+          isPrivate: false
+          sortKey: -1745597961126
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/patients/13"
+        name: getOne
+        meta:
+          id: req_aa51696f0a324ced8ffdcc9b74a58d89
+          created: 1745601507636
+          modified: 1746546507139
+          isPrivate: false
+          sortKey: -1745597862266.5
+        method: GET
+        headers:
+          - id: pair_253fcff626db45e0a8d1ae54d7b677a7
+            name: User-Agent
+            value: insomnia/11.0.2
+          - disabled: false
+            id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/patients/1"
+        name: Update
+        meta:
+          id: req_b451fe457f084309808f83a178f18dd7
+          created: 1745601507639
+          modified: 1745862345719
+          isPrivate: false
+          sortKey: -1745597812836.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            	{
+            		"name": "Mateus leonardo dos Santos Sensão",
+            		"cpf": "45885434824",
+            		"bloodType": "O-"
+            	}
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/patients/13"
+        name: Delete
+        meta:
+          id: req_0e9553f23ac943ecb87a8c420e091c8d
+          created: 1745601507641
+          modified: 1745845757419
+          isPrivate: false
+          sortKey: -1745597837551.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Doctors
+    meta:
+      id: fld_b2ae1e0097cd41c4897a31ec529e7046
+      created: 1745601693401
+      modified: 1745601693401
+      sortKey: -1745597904325
+    children:
+      - url: "{{ _.baseurl }}/doctors"
+        name: getAll
+        meta:
+          id: req_caa6ee0c99a446d1bef15c4c82432670
+          created: 1745601693402
+          modified: 1745601717023
+          isPrivate: false
+          sortKey: -1745597961126
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/doctors/1"
+        name: getOne
+        meta:
+          id: req_30d0df9435b24a47b3b5c5cd6f90fbdd
+          created: 1745601693404
+          modified: 1745601723608
+          isPrivate: false
+          sortKey: -1745597862266.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/doctors/17"
+        name: Update
+        meta:
+          id: req_268de475a6e04504b50f8db5d1b2b569
+          created: 1745601693405
+          modified: 1745601710898
+          isPrivate: false
+          sortKey: -1745597812836.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            "email": "mateus_leonardo19979@hotmail.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/doctors/3"
+        name: Delete
+        meta:
+          id: req_b9b57a065b8a4d56adb2a8f8384d4e75
+          created: 1745601693408
+          modified: 1745846640699
+          isPrivate: false
+          sortKey: -1745597837551.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/doctors"
+        name: Create
+        meta:
+          id: req_0a6f81f838324bafa8dd7c9a397291d3
+          created: 1745846316325
+          modified: 1745846694598
+          isPrivate: false
+          sortKey: -1745597800479.3125
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "rafaela_moreno@hotmail.com",
+            	"name": "Rafaela Moreno Bocalon",
+            	"cpf": "49061545064",
+            	"password": "12345",
+            	"specialty": "Cardiologista",
+            	"crm": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Attendants
+    meta:
+      id: fld_e8c6f265f8f645df808a6c1b13c4d6bb
+      created: 1745601767388
+      modified: 1745601767388
+      sortKey: -1745597799425
+    children:
+      - url: "{{ _.baseurl }}/attendants"
+        name: getAll
+        meta:
+          id: req_dc88ffbac5724d0da880b37415d72263
+          created: 1745601767390
+          modified: 1745601773461
+          isPrivate: false
+          sortKey: -1745597961126
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/attendants/13"
+        name: getOne
+        meta:
+          id: req_6c1dda991b4d4efb9f4ab790156abca4
+          created: 1745601767391
+          modified: 1745601781886
+          isPrivate: false
+          sortKey: -1745597862266.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/attendants/17"
+        name: Update
+        meta:
+          id: req_82a9bdc157064d45945e7f6b87916398
+          created: 1745601767393
+          modified: 1745601794131
+          isPrivate: false
+          sortKey: -1745597812836.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            "email": "mateus_leonardo19979@hotmail.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/attendants/1"
+        name: Delete
+        meta:
+          id: req_61ba7061139748c69ffa68bd80235580
+          created: 1745601767395
+          modified: 1745845776024
+          isPrivate: false
+          sortKey: -1745597837551.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/attendants"
+        name: Create
+        meta:
+          id: req_b30544ef9fef47f3b8ecc9e3dc4fd17e
+          created: 1745846798134
+          modified: 1745846920908
+          isPrivate: false
+          sortKey: -1745597961226
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "AllanPessin@hotmail.com",
+            	"name": "Allan Pessin",
+            	"cpf": "33262539074",
+            	"password": "12345",
+            	"accessCode": "12345678910"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Appointments
+    meta:
+      id: fld_a74560b973ec45239e9bfaad61db3dad
+      created: 1745601812960
+      modified: 1745601812960
+      sortKey: -1745597773200
+    children:
+      - url: "{{ _.baseurl }}/appointments"
+        name: getAll
+        meta:
+          id: req_973a390717e442d49ba305b578611027
+          created: 1745601812962
+          modified: 1745601823167
+          isPrivate: false
+          sortKey: -1745597961126
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/appointments/23"
+        name: getOne
+        meta:
+          id: req_16daaa324b614e23be3129d73b8915e4
+          created: 1745601812963
+          modified: 1745601866921
+          isPrivate: false
+          sortKey: -1745597862266.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/appointments/1"
+        name: Update
+        meta:
+          id: req_1d4233bd0e8642479d8435689a9c0bb5
+          created: 1745601812965
+          modified: 1745863147546
+          isPrivate: false
+          sortKey: -1745597812836.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            "status": "CONFIRMED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/attendants/14"
+        name: Delete
+        meta:
+          id: req_45087667e7534d20adc10af093d48eb3
+          created: 1745601812968
+          modified: 1745601812968
+          isPrivate: false
+          sortKey: -1745597837551.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/appointments"
+        name: Create
+        meta:
+          id: req_42ef82603d4745a9ae48f7b043b700d5
+          created: 1745847047009
+          modified: 1745862828126
+          isPrivate: false
+          sortKey: -1745597961226
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            	{
+            		"patientId": 1,
+            		"doctorId": 1,
+            		"attendantId": 1,
+            		"date": "2025-05-05T10:00:00.000Z",
+            		"reason": "Sentindo palpitadas no coração"
+            	}
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: MedicalRecords
+    meta:
+      id: fld_84798cd47b764361845d288c8b00c1ad
+      created: 1745850153415
+      modified: 1745850153415
+      sortKey: -1745597760087.5
+    children:
+      - url: "{{ _.baseurl }}/medical-records"
+        name: getAll
+        meta:
+          id: req_272734a559fe48dd8ebea29cf392a0b8
+          created: 1745850153431
+          modified: 1745865932026
+          isPrivate: false
+          sortKey: -1745597961126
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/medical-records/23"
+        name: getOne
+        meta:
+          id: req_e770e051fae24139a3002649fb23fbb1
+          created: 1745850153434
+          modified: 1745850163498
+          isPrivate: false
+          sortKey: -1745597862266.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/medical-records/1"
+        name: Update
+        meta:
+          id: req_193de312328843a4b20e79762cc392bf
+          created: 1745850153436
+          modified: 1745949687092
+          isPrivate: false
+          sortKey: -1745597812836.75
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"prescription": "Fazer atividade física moderada"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/medical-records/14"
+        name: Delete
+        meta:
+          id: req_32dc074154ad48bc9b35a4d4a66171ef
+          created: 1745850153438
+          modified: 1745850166407
+          isPrivate: false
+          sortKey: -1745597837551.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseurl }}/medical-records"
+        name: Create
+        meta:
+          id: req_90db041f646f473893a106bb519349f6
+          created: 1745850153440
+          modified: 1745949667623
+          isPrivate: false
+          sortKey: -1745597961226
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"patientId": 1,
+            	"diagnosis": "Insuficiencia cardiaca",
+            	"prescription": "Fazer atividade física"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+            id: pair_253fcff626db45e0a8d1ae54d7b677a7
+          - id: pair_1276ec6e8b7d405bb7c10cd05e5b64e9
+            name: Authorization
+            value: Bearer {% response 'body', 'req_efb17c62a38a46f88f8e7de90ad38d61',
+              'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_a8ae0b12a2862dca53b0cb64042334b786726518
+    created: 1745597725923
+    modified: 1745597725923
+environments:
+  name: Base Environment
+  meta:
+    id: env_a8ae0b12a2862dca53b0cb64042334b786726518
+    created: 1745597725914
+    modified: 1745597801893
+    isPrivate: false
+  data:
+    baseurl: http://localhost:3000
