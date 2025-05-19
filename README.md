@@ -94,6 +94,8 @@ can('read', 'Patient');
 
 ## Rotas do Sistema de Gestão de Consultas Médicas
 
+### Caso queira testar é só baixar o Insomnia e executar o arquivo **Insomnia_2025-05-19.yaml** que está na raiz do projeto.
+
 ### Usuários (Users)
 
 1. **GET /users**
