@@ -40,12 +40,12 @@ export class DoctorsService {
   async findByUserId(userId: number) {
     const doctor = await this.prismaService.doctor.findUnique({
       where: {
-        userId
-      }
-    })
+        userId,
+      },
+    });
 
-    if (!doctor) throw new NotFoundException('Doctor not found')
-    return doctor
+    if (!doctor) throw new NotFoundException('Doctor not found');
+    return doctor;
   }
 
   findAll() {
@@ -64,9 +64,9 @@ export class DoctorsService {
             name: true,
             email: true,
             cpf: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
     if (!doctor) throw new NotFoundException('Doctor not found');
     return doctor;
@@ -93,7 +93,7 @@ export class DoctorsService {
       },
     });
   }
-  //Implementar a remoção de um usuário e o cascade para remover o médico
+
   async remove(id: number) {
     const doctorExists = await this.prismaService.doctor.findUnique({
       where: { id },
@@ -101,8 +101,10 @@ export class DoctorsService {
 
     if (!doctorExists) throw new NotFoundException('Doctor not found');
 
-    return this.prismaService.doctor.delete({
+    await this.prismaService.doctor.delete({
       where: { id },
     });
+
+    return this.usersService.remove(doctorExists.userId);
   }
 }
