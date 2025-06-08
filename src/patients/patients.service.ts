@@ -94,10 +94,12 @@ export class PatientsService {
 
     if (!patientExists) throw new NotFoundException('Patient not found');
 
-    return this.prismaService.patient.delete({
+    await this.prismaService.patient.delete({
       where: {
         id,
       },
     });
+
+    return this.usersService.remove(patientExists.userId);
   }
 }
