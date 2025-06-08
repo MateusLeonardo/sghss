@@ -35,6 +35,7 @@ model User {
   patient   Patient?
   doctor    Doctor?
   attendant Attendant?
+  admin     Admin?
 
   @@map("users")
 }
@@ -42,7 +43,7 @@ model User {
 model Patient {
   id          Int      @id @default(autoincrement())
   userId      Int      @unique
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   bloodType   String?
   allergies   String?
   medications String?
@@ -58,7 +59,7 @@ model Patient {
 model Doctor {
   id        Int      @id @default(autoincrement())
   userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   specialty String
   crm       String   @unique
   createdAt DateTime @default(now())
@@ -73,7 +74,7 @@ model Doctor {
 model Attendant {
   id         Int      @id @default(autoincrement())
   userId     Int      @unique
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessCode String?  @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -81,6 +82,17 @@ model Attendant {
   appointments Appointment[] @relation("AttendantAppointments")
 
   @@map("attendants")
+}
+
+model Admin {
+  id         Int      @id @default(autoincrement())
+  accessCode String?  @unique
+  userId     Int      @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("admins")
 }
 
 model Appointment {
@@ -96,9 +108,9 @@ model Appointment {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 
-  patient   Patient    @relation(fields: [patientId], references: [id])
-  doctor    Doctor     @relation(fields: [doctorId], references: [id])
-  attendant Attendant? @relation("AttendantAppointments", fields: [attendantId], references: [id])
+  patient   Patient    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor    Doctor     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  attendant Attendant? @relation("AttendantAppointments", fields: [attendantId], references: [id], onDelete: SetNull)
 
   @@index([patientId])
   @@index([doctorId])
