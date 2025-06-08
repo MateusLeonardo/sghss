@@ -77,8 +77,10 @@ export class AttendantsService {
     });
     if (!attendantExists) throw new NotFoundException('Attendant not found');
 
-    return this.prismaService.attendant.delete({
+    await this.prismaService.attendant.delete({
       where: { id },
     });
+
+    return this.usersService.remove(attendantExists.userId);
   }
 }
