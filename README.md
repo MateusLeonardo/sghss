@@ -104,9 +104,9 @@ can('read', 'Patient');
 
 1. **GET /users**
 
-   - **Descrição**: Lista todos os usuários
-   - **Permissão**: Apenas ADMIN
-   - **Resposta**
+   - **Descrição**: Lista todos os usuários.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
 
    ```json
    [
@@ -124,152 +124,193 @@ can('read', 'Patient');
 
 2. **POST /users**
 
-   - **Descrição**: Cria um novo usuário no sistema.
-   - **Uso**: Permite que o administrador crie um novo usuário, seja paciente, médico, atendente, etc.
+   - **Descrição**: Cria um novo usuário.
+   - **Permissão**: Apenas ADMIN.
 
 3. **GET /users/:id**
 
    - **Descrição**: Retorna as informações de um usuário específico pelo ID.
-   - **Uso**: Permite que o administrador obtenha informações detalhadas de um usuário específico.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 1,
+     "email": "user@example.com",
+     "name": "João da Silva",
+     "cpf": "12345678900",
+     "role": "PATIENT",
+     "createdAt": "2025-06-01T12:00:00.000Z",
+     "updatedAt": "2025-06-01T12:00:00.000Z"
+   }
+   ```
 
 4. **PATCH /users/:id**
 
    - **Descrição**: Atualiza as informações de um usuário específico pelo ID.
-   - **Uso**: Permite que o administrador edite as informações de um usuário.
+   - **Permissão**: Apenas ADMIN.
 
 5. **DELETE /users/:id**
    - **Descrição**: Exclui um usuário específico pelo ID.
-   - **Uso**: Permite que o administrador exclua um usuário do sistema.
+   - **Permissão**: Apenas ADMIN.
 
 ### Pacientes (Patients)
 
 1. **GET /patients**
 
    - **Descrição**: Retorna todos os pacientes registrados no sistema.
-   - **Uso**: Permite que o administrador ou atendente consulte todos os pacientes.
+   - **Permissão**: ADMIN ou ATTENDANT.
+   - **Resposta:**
+
+   ```json
+   [
+     {
+       "id": 8,
+       "userId": 19,
+       "bloodType": "O-",
+       "allergies": "Dipirona",
+       "medications": "toma remedio para pressão alta",
+       "createdAt": "2025-06-09T16:39:45.580Z",
+       "updatedAt": "2025-06-09T16:39:45.580Z"
+     }
+   ]
+   ```
 
 2. **POST /patients**
 
    - **Descrição**: Cria um novo paciente no sistema.
-   - **Uso**: Permite que um atendente ou administrador crie um novo paciente no sistema.
+   - **Permissão**: ADMIN ou ATTENDANT.
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 8,
+     "userId": 19,
+     "bloodType": "O-",
+     "allergies": "Dipirona",
+     "medications": "toma remedio para pressão alta",
+     "createdAt": "2025-06-09T16:39:45.580Z",
+     "updatedAt": "2025-06-09T16:39:45.580Z"
+   }
+   ```
 
 3. **GET /patients/:id**
 
    - **Descrição**: Retorna as informações de um paciente específico pelo ID.
-   - **Uso**: Usado para consultar as informações detalhadas de um paciente específico, permitido por todas as roles.
+   - **Permissão**: ADMIN, ATTENDANT, DOCTOR, PATIENT.
 
 4. **PATCH /patients/:id**
 
    - **Descrição**: Atualiza as informações de um paciente específico pelo ID.
-   - **Uso**: Permite que o administrador ou atendente ou doutor edite as informações de um paciente.
+   - **Permissão**: ADMIN, ATTENDANT ou DOCTOR.
 
 5. **DELETE /patients/:id**
    - **Descrição**: Exclui um paciente específico pelo ID.
-   - **Uso**: Usado para remover um paciente do sistema, apenas administrador tem acesso.
+   - **Permissão**: Apenas ADMIN
 
 ### Médicos (Doctors)
 
 1. **GET /doctors**
 
    - **Descrição**: Retorna todos os médicos registrados no sistema.
-   - **Uso**: Permite que o administrador consulte todos os médicos.
+   - **Permissão**: Permite que o administrador consulte todos os médicos.
 
 2. **POST /doctors**
 
    - **Descrição**: Cria um novo médico no sistema.
-   - **Uso**: Usado pelo administrador para registrar um novo médico.
+   - **Permissão**: Usado pelo administrador para registrar um novo médico.
 
 3. **GET /doctors/:id**
 
    - **Descrição**: Retorna as informações de um médico específico pelo ID.
-   - **Uso**: Usado para consultar os dados detalhados de um médico, permitido por administrador e doutor, mas só pode acessar o seu perfil.
+   - **Permissão**: Usado para consultar os dados detalhados de um médico, permitido por administrador e doutor, mas só pode acessar o seu perfil.
 
 4. **PATCH /doctors/:id**
 
    - **Descrição**: Atualiza as informações de um médico específico pelo ID.
-   - **Uso**: Permite editar informações de um médico, como especialidade ou CRM, apenas administrador e doutor podem acessar.
+   - **Permissão**: Permite editar informações de um médico, como especialidade ou CRM, apenas administrador e doutor podem acessar.
 
 5. **DELETE /doctors/:id**
    - **Descrição**: Exclui um médico específico pelo ID.
-   - **Uso**: Usado para remover um médico do sistema, apenas administrador pode deletar um doutor.
+   - **Permissão**: Usado para remover um médico do sistema, apenas administrador pode deletar um doutor.
 
 ### Atendentes (Attendants)
 
 1. **GET /attendants**
 
    - **Descrição**: Retorna todos os atendentes registrados no sistema.
-   - **Uso**: Usado pelo administrador para visualizar todos os atendentes.
+   - **Permissão**: Usado pelo administrador para visualizar todos os atendentes.
 
 2. **POST /attendants**
 
    - **Descrição**: Cria um novo atendente no sistema.
-   - **Uso**: Usado para adicionar um novo atendente, apenas administradores podem criar um atendente.
+   - **Permissão**: Usado para adicionar um novo atendente, apenas administradores podem criar um atendente.
 
 3. **GET /attendants/:id**
 
    - **Descrição**: Retorna as informações de um atendente específico pelo ID.
-   - **Uso**: Usado para consultar as informações detalhadas de um atendente, apenas administradores e atendentes podem acessar essa rota, mas atendentes só podem ver seu perfil.
+   - **Permissão**: Usado para consultar as informações detalhadas de um atendente, apenas administradores e atendentes podem acessar essa rota, mas atendentes só podem ver seu perfil.
 
 4. **PATCH /attendants/:id**
 
    - **Descrição**: Atualiza as informações de um atendente específico pelo ID.
-   - **Uso**: Usado para editar as informações de um atendente, apenas administradores e atendentes.
+   - **Permissão**: Usado para editar as informações de um atendente, apenas administradores e atendentes.
 
 5. **DELETE /attendants/:id**
    - **Descrição**: Exclui um atendente específico pelo ID.
-   - **Uso**: Usado pelo administrador para excluir um atendente do sistema.
+   - **Permissão**: Usado pelo administrador para excluir um atendente do sistema.
 
 ### Consultas (Appointments)
 
 1. **GET /appointments**
 
    - **Descrição**: Retorna todos os agendamentos de consultas no sistema.
-   - **Uso**: Usado para visualizar todos os agendamentos de consultas, só administradores e atendentes podem visualizar todas as consultas.
+   - **Permissão**: Usado para visualizar todos os agendamentos de consultas, só administradores e atendentes podem visualizar todas as consultas.
 
 2. **POST /appointments**
 
    - **Descrição**: Cria um novo agendamento de consulta.
-   - **Uso**: Usado para agendar uma nova consulta entre paciente e médico, só administradores e atendentes podem criar.
+   - **Permissão**: Usado para agendar uma nova consulta entre paciente e médico, só administradores e atendentes podem criar.
 
 3. **GET /appointments/:id**
 
    - **Descrição**: Retorna as informações de um agendamento de consulta específico.
-   - **Uso**: Usado para consultar os dados detalhados de um agendamento específico, todas as roles podem acessar essa rota.
+   - **Permissão**: Usado para consultar os dados detalhados de um agendamento específico, todas as roles podem acessar essa rota.
 
 4. **PATCH /appointments/:id**
 
    - **Descrição**: Atualiza um agendamento de consulta específico.
-   - **Uso**: Usado para alterar detalhes de um agendamento de consulta, apenas administrador, doutores e atendentes podem atualizar.
+   - **Permissão**: Usado para alterar detalhes de um agendamento de consulta, apenas administrador, doutores e atendentes podem atualizar.
 
 5. **DELETE /appointments/:id**
    - **Descrição**: Exclui um agendamento de consulta específico.
-   - **Uso**: Usado para cancelar um agendamento de consulta, apenas administradores.
+   - **Permissão**: Usado para cancelar um agendamento de consulta, apenas administradores.
 
 ### Registros Médicos (Medical Records)
 
 1. **GET /medical-records**
 
    - **Descrição**: Retorna todos os registros médicos.
-   - **Uso**: Permite ao administrador ou médico visualizar todos os registros médicos.
+   - **Permissão**: Permite ao administrador ou médico visualizar todos os registros médicos.
 
 2. **POST /medical-records**
 
    - **Descrição**: Cria um novo registro médico.
-   - **Uso**: Usado para criar um registro médico, geralmente feito por um médico, apenas admin ou doutores podem acessar.
+   - **Permissão**: Usado para criar um registro médico, geralmente feito por um médico, apenas admin ou doutores podem acessar.
 
 3. **GET /medical-records/:id**
 
    - **Descrição**: Retorna as informações de um registro médico específico.
-   - **Uso**: Usado para consultar um registro médico individual, permitido por administrador, doutor ou paciente.
+   - **Permissão**: Usado para consultar um registro médico individual, permitido por administrador, doutor ou paciente.
 
 4. **PATCH /medical-records/:id**
 
    - **Descrição**: Atualiza um registro médico específico.
-   - **Uso**: Usado para editar informações em um registro médico, como diagnóstico ou prescrição, apenas administrador e doutor podem atualizar, apenas administrador pode excluir.
+   - **Permissão**: Usado para editar informações em um registro médico, como diagnóstico ou prescrição, apenas administrador e doutor podem atualizar, apenas administrador pode excluir.
 
 5. **DELETE /medical-records/:id**
    - **Descrição**: Exclui um registro médico específico.
-   - **Uso**: Usado para remover um registro médico do sistema.
+   - **Permissão**: Usado para remover um registro médico do sistema.
 
 ---
 
