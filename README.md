@@ -213,26 +213,44 @@ can('read', 'Patient');
 1. **GET /doctors**
 
    - **Descrição**: Retorna todos os médicos registrados no sistema.
-   - **Permissão**: Permite que o administrador consulte todos os médicos.
+   - **Permissão**: Apenas ADMIN.
 
 2. **POST /doctors**
 
    - **Descrição**: Cria um novo médico no sistema.
-   - **Permissão**: Usado pelo administrador para registrar um novo médico.
+   - **Permissão**: Apenas ADMIN.
 
 3. **GET /doctors/:id**
 
    - **Descrição**: Retorna as informações de um médico específico pelo ID.
-   - **Permissão**: Usado para consultar os dados detalhados de um médico, permitido por administrador e doutor, mas só pode acessar o seu perfil.
+   - **Permissão**: Apenas ADMIN e DOCTOR,
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 4,
+     "userId": 16,
+     "specialty": "Osteopata",
+     "crm": "31234",
+     "createdAt": "2025-06-08T15:44:19.735Z",
+     "updatedAt": "2025-06-08T15:44:19.735Z",
+     "user": {
+       "id": 16,
+       "name": "João da Silva",
+       "email": "joaodasilva@hotmail.com",
+       "cpf": "99999999999"
+     }
+   }
+   ```
 
 4. **PATCH /doctors/:id**
 
    - **Descrição**: Atualiza as informações de um médico específico pelo ID.
-   - **Permissão**: Permite editar informações de um médico, como especialidade ou CRM, apenas administrador e doutor podem acessar.
+   - **Permissão**: Apenas ADMIN e DOCTOR.
 
 5. **DELETE /doctors/:id**
    - **Descrição**: Exclui um médico específico pelo ID.
-   - **Permissão**: Usado para remover um médico do sistema, apenas administrador pode deletar um doutor.
+   - **Permissão**: Apenas ADMIN.
 
 ### Atendentes (Attendants)
 
