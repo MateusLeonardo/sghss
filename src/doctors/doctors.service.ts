@@ -34,6 +34,15 @@ export class DoctorsService {
         specialty,
         userId: createdUser.id,
       },
+      include: {
+        user: {
+          omit: {
+            id: true,
+            password: true,
+            role: true,
+          },
+        },
+      },
     });
   }
 
@@ -49,7 +58,17 @@ export class DoctorsService {
   }
 
   findAll() {
-    return this.prismaService.doctor.findMany();
+    return this.prismaService.doctor.findMany({
+      include: {
+        user: {
+          omit: {
+            id: true,
+            password: true,
+            role: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
@@ -59,11 +78,10 @@ export class DoctorsService {
       },
       include: {
         user: {
-          select: {
+          omit: {
             id: true,
-            name: true,
-            email: true,
-            cpf: true,
+            password: true,
+            role: true,
           },
         },
       },
@@ -90,6 +108,15 @@ export class DoctorsService {
       data: {
         crm,
         specialty,
+      },
+      include: {
+        user: {
+          omit: {
+            id: true,
+            password: true,
+            role: true,
+          },
+        },
       },
     });
   }
