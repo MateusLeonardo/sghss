@@ -32,7 +32,17 @@ export class PatientsService {
   }
 
   findAll() {
-    return this.prismaService.patient.findMany();
+    return this.prismaService.patient.findMany({
+      include: {
+        user: {
+          omit: {
+            password: true,
+            id: true,
+            role: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
@@ -42,11 +52,10 @@ export class PatientsService {
       },
       include: {
         user: {
-          select: {
+          omit: {
+            password: true,
             id: true,
-            name: true,
-            email: true,
-            cpf: true,
+            role: true,
           },
         },
       },
@@ -81,6 +90,15 @@ export class PatientsService {
         allergies,
         medications,
         updatedAt: new Date(),
+      },
+      include: {
+        user: {
+          omit: {
+            password: true,
+            id: true,
+            role: true,
+          },
+        },
       },
     });
   }
