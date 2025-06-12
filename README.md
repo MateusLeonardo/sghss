@@ -171,7 +171,14 @@ can('read', 'Patient');
        "allergies": "Dipirona",
        "medications": "toma remedio para pressão alta",
        "createdAt": "2025-06-09T16:39:45.580Z",
-       "updatedAt": "2025-06-09T16:39:45.580Z"
+       "updatedAt": "2025-06-09T16:39:45.580Z",
+       "user": {
+         "email": "teste1@gmail.com",
+         "name": "Teste da silva",
+         "cpf": "81501458000",
+         "createdAt": "2025-06-09T16:39:45.561Z",
+         "updatedAt": "2025-06-09T16:39:45.561Z"
+       }
      }
    ]
    ```
@@ -203,6 +210,26 @@ can('read', 'Patient');
 
    - **Descrição**: Atualiza as informações de um paciente específico pelo ID.
    - **Permissão**: ADMIN, ATTENDANT ou DOCTOR.
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 8,
+     "userId": 19,
+     "bloodType": "O-",
+     "allergies": "Dipirona",
+     "medications": "toma remedio para pressão alta",
+     "createdAt": "2025-06-09T16:39:45.580Z",
+     "updatedAt": "2025-06-12T01:00:25.686Z",
+     "user": {
+       "email": "teste1@gmail.com",
+       "name": "Teste da silva santos",
+       "cpf": "81501458000",
+       "createdAt": "2025-06-09T16:39:45.561Z",
+       "updatedAt": "2025-06-12T01:00:25.673Z"
+     }
+   }
+   ```
 
 5. **DELETE /patients/:id**
    - **Descrição**: Exclui um paciente específico pelo ID.
@@ -235,10 +262,11 @@ can('read', 'Patient');
      "createdAt": "2025-06-08T15:44:19.735Z",
      "updatedAt": "2025-06-08T15:44:19.735Z",
      "user": {
-       "id": 16,
-       "name": "João da Silva",
-       "email": "joaodasilva@hotmail.com",
-       "cpf": "99999999999"
+       "email": "mateus_leonardo19979@hotmail.com",
+       "name": "Rafaela Moreno",
+       "cpf": "10571722008",
+       "createdAt": "2025-06-08T15:44:19.721Z",
+       "updatedAt": "2025-06-09T17:21:01.462Z"
      }
    }
    ```
