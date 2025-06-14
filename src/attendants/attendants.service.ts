@@ -38,13 +38,32 @@ export class AttendantsService {
   }
 
   findAll() {
-    return this.prismaService.attendant.findMany();
+    return this.prismaService.attendant.findMany({
+      include: {
+        user: {
+          omit: {
+            id: true,
+            password: true,
+            role: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
     const attendant = await this.prismaService.attendant.findUnique({
       where: {
         id,
+      },
+      include: {
+        user: {
+          omit: {
+            id: true,
+            password: true,
+            role: true,
+          },
+        },
       },
     });
     if (!attendant) throw new NotFoundException('Attendant not found');
@@ -65,6 +84,15 @@ export class AttendantsService {
         user: {
           update: {
             ...user,
+          },
+        },
+      },
+      include: {
+        user: {
+          omit: {
+            id: true,
+            password: true,
+            role: true,
           },
         },
       },
