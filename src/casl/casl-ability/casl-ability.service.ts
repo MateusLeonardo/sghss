@@ -1,6 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { AbilityBuilder, PureAbility, Subject } from '@casl/ability';
-import { User, Role, Patient, Doctor, Attendant } from '@prisma/client';
+import { User, Role, Patient, Doctor, Attendant, Admin } from '@prisma/client';
 
 export type PermActions = 'manage' | 'create' | 'read' | 'update' | 'delete';
 export type PermissionResource =
@@ -10,12 +10,18 @@ export type PermissionResource =
   | 'Patient'
   | 'Doctor'
   | 'Attendant'
+  | 'Admin'
   | 'all';
 
 export type AppAbility = PureAbility<[PermActions, PermissionResource]>;
 
 type PermissionHandler = (
-  user: User & { patient?: Patient; doctor?: Doctor; attendant?: Attendant },
+  user: User & {
+    patient?: Patient;
+    doctor?: Doctor;
+    attendant?: Attendant;
+    admin?: Admin;
+  },
   builder: AbilityBuilder<AppAbility>,
 ) => void;
 
@@ -42,7 +48,7 @@ const rolePermissionsMap: Record<Role, PermissionHandler> = {
 
   [Role.ATTENDANT]: (user, { can }) => {
     if (!user.attendant) return;
-    can(['create','read', 'update'], 'Appointment');
+    can(['create', 'read', 'update'], 'Appointment');
     can('read', 'Patient');
   },
 };
