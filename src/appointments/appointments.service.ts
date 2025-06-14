@@ -123,7 +123,7 @@ export class AppointmentsService {
       },
     });
 
-    if(!appointment) {
+    if (!appointment) {
       throw new NotFoundException('Consulta não encontrada');
     }
     return appointment;
@@ -210,6 +210,6 @@ export class AppointmentsService {
 
     return this.prismaService.appointment.delete({
       where: { id },
-    })
+    });
   }
 }
