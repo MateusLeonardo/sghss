@@ -54,30 +54,64 @@ export class UsersService {
       },
     });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Usuário não encontrado');
     }
     const { password, ...result } = user;
     return result;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.prismaService.user.findUnique({
+    const userToUpdate = await this.prismaService.user.findUnique({
       where: {
         id,
       },
     });
 
-    if (!user) {
-      throw new NotFoundException('User not found');
+    if (!userToUpdate) {
+      throw new NotFoundException('Usuário não encontrado');
     }
 
-    const updateUser = await this.prismaService.user.update({
-      where: {
-        id,
-      },
+    if (updateUserDto.email || updateUserDto.cpf) {
+      const existingUser = await this.prismaService.user.findFirst({
+        where: {
+          id: {
+            not: id,
+          },
+          OR: [
+            ...(updateUserDto.email &&
+            updateUserDto.email !== userToUpdate.email
+              ? [{ email: updateUserDto.email }]
+              : []),
+            ...(updateUserDto.cpf && updateUserDto.cpf !== userToUpdate.cpf
+              ? [{ cpf: updateUserDto.cpf }]
+              : []),
+          ],
+        },
+      });
+
+      if (existingUser) {
+        if (existingUser.email === updateUserDto.email) {
+          throw new ConflictException('Email já está em uso por outro usuário');
+        }
+        if (existingUser.cpf === updateUserDto.cpf) {
+          throw new ConflictException('CPF já está em uso por outro usuário');
+        }
+      }
+    }
+
+    if (updateUserDto.password) {
+      updateUserDto.password = await bcrypt.hash(
+        updateUserDto.password,
+        await bcrypt.genSalt(),
+      );
+    }
+
+    const updatedUser = await this.prismaService.user.update({
+      where: { id },
       data: updateUserDto,
     });
-    const { password, ...result } = updateUser;
+
+    const { password, ...result } = updatedUser;
     return result;
   }
 
@@ -89,7 +123,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Usuário não encontrado');
     }
     const deletedUser = await this.prismaService.user.delete({
       where: {
