@@ -75,17 +75,26 @@ export class AttendantsService {
         },
       },
     });
-    if (!attendant) throw new NotFoundException('Attendant not found');
+    if (!attendant) throw new NotFoundException('Atendente não encontrado');
     return attendant;
   }
 
   async update(id: number, { accessCode, ...user }: UpdateAttendantDto) {
-    const patientExists = await this.prismaService.attendant.findUnique({
+    const attendantExists = await this.prismaService.attendant.findUnique({
       where: { id },
     });
-    if (!patientExists) throw new NotFoundException('Attendant not found');
+    if (!attendantExists)
+      throw new NotFoundException('Atendente não encontrado');
 
-    // await this.usersService.update(patientExists.userId, user)
+    if (accessCode) {
+      const attendantAccessCodeExists =
+        await this.prismaService.attendant.findUnique({
+          where: { accessCode },
+        });
+      if (attendantAccessCodeExists)
+        throw new ConflictException('Código de acesso já existe');
+    }
+
     return this.prismaService.attendant.update({
       where: { id },
       data: {
