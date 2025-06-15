@@ -25,7 +25,7 @@ export class MedicalRecordsController {
   constructor(private readonly medicalRecordsService: MedicalRecordsService) {}
 
   @Post()
-  @Roles('ADMIN', 'DOCTOR')
+  @Roles('DOCTOR')
   @Permissions('create', 'MedicalRecord')
   create(
     @UserDecorator() user: User,
@@ -49,7 +49,7 @@ export class MedicalRecordsController {
   }
 
   @Patch(':id')
-  @Roles('ADMIN', 'DOCTOR')
+  @Roles('DOCTOR')
   @Permissions('update', 'MedicalRecord')
   update(
     @Param('id') id: string,
