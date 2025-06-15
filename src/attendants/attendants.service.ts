@@ -19,10 +19,19 @@ export class AttendantsService {
     const userExists = await this.prismaService.user.findUnique({
       where: {
         email: user.email,
+        cpf: user.cpf,
       },
     });
 
-    if (userExists) throw new ConflictException('User already exists');
+    if (userExists) throw new ConflictException('Usuário já existe');
+
+    const attentandExists = await this.prismaService.attendant.findUnique({
+      where: {
+        accessCode,
+      },
+    });
+
+    if (attentandExists) throw new ConflictException('Atendente já existe');
 
     const { id } = await this.usersService.create({
       ...user,
