@@ -637,11 +637,30 @@ can('read', 'Patient');
    ```json
    {
      "doctorId": 4,
+     "attendantId": null,
      "date": "2025-07-12T09:00:00.000Z",
-     "status": "PENDING",
+     "status": "CONFIRMED",
      "reason": "Dores de cabeça",
      "notes": null,
-     "duration": 45
+     "duration": 30
+   }
+   ```
+
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 11,
+     "patientId": 8,
+     "doctorId": 4,
+     "attendantId": null,
+     "date": "2025-07-12T09:00:00.000Z",
+     "status": "CONFIRMED",
+     "reason": "Dores de cabeça",
+     "notes": null,
+     "duration": 30,
+     "createdAt": "2025-06-15T20:01:45.239Z",
+     "updatedAt": "2025-06-15T20:02:53.237Z"
    }
    ```
 
