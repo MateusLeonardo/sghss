@@ -39,13 +39,32 @@ export class AdminService {
   }
 
   findAll() {
-    return this.prismaService.admin.findMany();
+    return this.prismaService.admin.findMany({
+      include: {
+        user: {
+          omit: {
+            password: true,
+            id: true,
+            role: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
     const admin = await this.prismaService.admin.findFirst({
       where: {
         id,
+      },
+      include: {
+        user: {
+          omit: {
+            password: true,
+            id: true,
+            role: true,
+          },
+        },
       },
     });
 
@@ -71,6 +90,15 @@ export class AdminService {
       },
       data: {
         accessCode,
+      },
+      include: {
+        user: {
+          omit: {
+            password: true,
+            id: true,
+            role: true,
+          },
+        },
       },
     });
   }
