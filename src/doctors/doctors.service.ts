@@ -21,7 +21,15 @@ export class DoctorsService {
         email: user.email,
       },
     });
-    if (userExists) throw new ConflictException('User already exists');
+
+    if (userExists) throw new ConflictException('Usuário já existe');
+    const userExistsByCrm = await this.prismaService.doctor.findUnique({
+      where: {
+        crm,
+      },
+    });
+
+    if (userExistsByCrm) throw new ConflictException('CRM já existe');
 
     const createdUser = await this.usersService.create({
       ...user,
@@ -53,7 +61,7 @@ export class DoctorsService {
       },
     });
 
-    if (!doctor) throw new NotFoundException('Doctor not found');
+    if (!doctor) throw new NotFoundException('Doutor não encontrado');
     return doctor;
   }
 
@@ -86,7 +94,7 @@ export class DoctorsService {
         },
       },
     });
-    if (!doctor) throw new NotFoundException('Doctor not found');
+    if (!doctor) throw new NotFoundException('Doutor não encontrado');
     return doctor;
   }
 
@@ -95,11 +103,23 @@ export class DoctorsService {
       where: { id },
     });
 
-    if (!doctorExists) throw new NotFoundException('Doctor not found');
+    if (!doctorExists) throw new NotFoundException('Doutor não encontrado');
 
     await this.usersService.update(doctorExists.userId, {
       ...userData,
     });
+
+    if (crm && crm !== doctorExists.crm) {
+      const existsDoctorByCrm = await this.prismaService.doctor.findUnique({
+        where: {
+          crm,
+        },
+      });
+
+      if (existsDoctorByCrm) {
+        throw new ConflictException('CRM já existe');
+      }
+    }
 
     return this.prismaService.doctor.update({
       where: {
