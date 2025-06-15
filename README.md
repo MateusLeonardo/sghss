@@ -1,10 +1,8 @@
-# Sistema de Gestão de Consultas Médicas
+# Sistema de Gestão Hospitalar e de Serviços de Saúde (SSGHSS)
 
 ## Descrição
 
-Bem-vindo ao **Sistema de Gestão de Consultas Médicas**! Este é um sistema desenvolvido utilizando **NestJS** que visa simplificar o agendamento de consultas médicas e a gestão de registros médicos. Ele foi desenvolvido para ser robusto e escalável, oferecendo uma interface de backend bem estruturada para o gerenciamento de usuários (pacientes, médicos, atendentes e administradores).
-
-O sistema também integra um controle de permissões avançado usando **CASL (Code Access Security Layer)** para garantir que cada usuário só tenha acesso às funcionalidades que são permitidas pelo seu papel.
+Projeto feito para o curso de Análise e Desenvolvimento de Sistemas da Uninter que tem como base a criação de um sistema capaz de realizar o gerenciamento hospitalar de maneira eficiente, escalável e seguro.
 
 ---
 
@@ -100,59 +98,47 @@ can('read', 'Patient');
 
 ## Rotas do Sistema de Gestão de Consultas Médicas
 
-### Usuários (Users)
+### Autenticação (Auth)
 
-1. **GET /users**
+1. **POST /auth/login**
 
-   - **Descrição**: Lista todos os usuários.
-   - **Permissão**: Apenas ADMIN.
-   - **Resposta:**
+   - **Descrição**: Realiza o login do usuário.
+   - **Entrada:**
 
    ```json
-   [
-     {
-       "id": 1,
-       "email": "user@example.com",
-       "name": "João da Silva",
-       "cpf": "12345678900",
-       "role": "PATIENT",
-       "createdAt": "2025-06-01T12:00:00.000Z",
-       "updatedAt": "2025-06-01T12:00:00.000Z"
-     }
-   ]
+   {
+     "email": "mateusleonardo@hotmail.com",
+     "password": "12345"
+   }
    ```
 
-2. **POST /users**
-
-   - **Descrição**: Cria um novo usuário.
-   - **Permissão**: Apenas ADMIN.
-
-3. **GET /users/:id**
-
-   - **Descrição**: Retorna as informações de um usuário específico pelo ID.
-   - **Permissão**: Apenas ADMIN.
    - **Resposta:**
 
    ```json
    {
-     "id": 1,
-     "email": "user@example.com",
-     "name": "João da Silva",
-     "cpf": "12345678900",
-     "role": "PATIENT",
-     "createdAt": "2025-06-01T12:00:00.000Z",
-     "updatedAt": "2025-06-01T12:00:00.000Z"
+     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdGV1c19sZW9uYXJkbzE5OTdAaG90bWFpbC5jb20iLCJzdWIiOjksInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1MDAxNDg2MSwiZXhwIjoxNzUwMDE4NDYxfQ.hXws-T46S_MVtMTLRYKdyLBXrqgDylvwgphqpGgHLGE"
    }
    ```
 
-4. **PATCH /users/:id**
+2. **POST /auth/register**
 
-   - **Descrição**: Atualiza as informações de um usuário específico pelo ID.
-   - **Permissão**: Apenas ADMIN.
+   - **Descrição**: Realiza o registro de um novo usuário atrelando ao perfil de paciente.
+   - **Entrada:**
 
-5. **DELETE /users/:id**
-   - **Descrição**: Exclui um usuário específico pelo ID.
-   - **Permissão**: Apenas ADMIN.
+   ```json
+   {
+     "email": "mateusleonardo@hotmail.com",
+     "password": "12345"
+   }
+   ```
+
+   - **Resposta:**
+
+   ```json
+   {
+     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNpbHZhQGhvdG1haWwuY29tIiwic3ViIjoyNywicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3NTAwMTYyMzksImV4cCI6MTc1MDAxOTgzOX0.XpJdNZGhy8wga9BfslxiZIly7u6eOiiyWyJ6D8nF2zE"
+   }
+   ```
 
 ### Pacientes (Patients)
 
@@ -282,6 +268,18 @@ can('read', 'Patient');
 5. **DELETE /patients/:id**
    - **Descrição**: Exclui um paciente específico pelo ID.
    - **Permissão**: Apenas ADMIN
+   - **Resposta:**
+   ```json
+   {
+     "id": 20,
+     "email": "felipesilva@hotmail.com",
+     "name": "Felipe da Silva",
+     "cpf": "74714998005",
+     "role": "PATIENT",
+     "createdAt": "2025-06-15T14:56:26.642Z",
+     "updatedAt": "2025-06-15T14:56:26.642Z"
+   }
+   ```
 
 ### Médicos (Doctors)
 
@@ -405,6 +403,18 @@ can('read', 'Patient');
 5. **DELETE /doctors/:id**
    - **Descrição**: Exclui um médico específico pelo ID.
    - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+   ```json
+   {
+     "id": 23,
+     "email": "fernando@hotmail.com",
+     "name": "Fernando Santos",
+     "cpf": "51335472347",
+     "role": "DOCTOR",
+     "createdAt": "2025-06-15T15:06:30.171Z",
+     "updatedAt": "2025-06-15T15:06:30.171Z"
+   }
+   ```
 
 ### Atendentes (Attendants)
 
@@ -494,6 +504,7 @@ can('read', 'Patient');
    {
      "email": "joanasantossilva@hotmail.com",
      "name": "Joana Santos Silva",
+     "password": "12345",
      "cpf": "33262539074",
      "accessCode": "12345678910"
    }
@@ -521,6 +532,18 @@ can('read', 'Patient');
 5. **DELETE /attendants/:id**
    - **Descrição**: Exclui um atendente específico pelo ID.
    - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+   ```json
+   {
+     "id": 25,
+     "email": "claudio_viana@hotmail.com",
+     "name": "Cláudo Viana",
+     "cpf": "76995324811",
+     "role": "ATTENDANT",
+     "createdAt": "2025-06-15T15:24:32.901Z",
+     "updatedAt": "2025-06-15T15:24:32.901Z"
+   }
+   ```
 
 ### Consultas (Appointments)
 
@@ -552,21 +575,34 @@ can('read', 'Patient');
 
    - **Descrição**: Cria um novo agendamento de consulta.
    - **Permissão**: Apenas ADMIN E ATTENDANT.
+   - **Entrada:**
+
+   ```json
+   {
+     "patientId": 8,
+     "doctorId": 4,
+     "date": "2025-07-12T09:00:00.000Z",
+     "reason": "Dores de cabeça",
+     "notes": null,
+     "duration": 45
+   }
+   ```
+
    - **Resposta:**
 
    ```json
    {
-     "id": 9,
+     "id": 10,
      "patientId": 8,
      "doctorId": 4,
-     "attendantId": null,
-     "date": "2025-07-11T09:00:00.000Z",
+     "attendantId": 4,
+     "date": "2025-07-12T09:00:00.000Z",
      "status": "PENDING",
-     "reason": "Sentindo dores na canela",
+     "reason": "Dores de cabeça",
      "notes": null,
-     "duration": 30,
-     "createdAt": "2025-06-14T18:15:18.339Z",
-     "updatedAt": "2025-06-14T18:15:18.339Z"
+     "duration": 45,
+     "createdAt": "2025-06-15T15:38:00.221Z",
+     "updatedAt": "2025-06-15T15:38:00.221Z"
    }
    ```
 
@@ -574,15 +610,60 @@ can('read', 'Patient');
 
    - **Descrição**: Retorna as informações de um agendamento de consulta específico.
    - **Permissão**: ADMIN, ATTENDANT, DOCTOR, PATIENT.
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 10,
+     "patientId": 8,
+     "doctorId": 4,
+     "attendantId": 4,
+     "date": "2025-07-12T09:00:00.000Z",
+     "status": "PENDING",
+     "reason": "Dores de cabeça",
+     "notes": null,
+     "duration": 45,
+     "createdAt": "2025-06-15T15:38:00.221Z",
+     "updatedAt": "2025-06-15T15:38:00.221Z"
+   }
+   ```
 
 4. **PATCH /appointments/:id**
 
    - **Descrição**: Atualiza um agendamento de consulta específico.
    - **Permissão**: ADMIN, ATTENDANT ou DOCTOR.
+   - **Entrada:**
+
+   ```json
+   {
+     "doctorId": 4,
+     "date": "2025-07-12T09:00:00.000Z",
+     "status": "PENDING",
+     "reason": "Dores de cabeça",
+     "notes": null,
+     "duration": 45
+   }
+   ```
 
 5. **DELETE /appointments/:id**
    - **Descrição**: Exclui um agendamento de consulta específico.
-   - **Permissão**: Usado para cancelar um agendamento de consulta, apenas administradores.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+   ```json
+   {
+     "id": 10,
+     "patientId": 8,
+     "doctorId": 4,
+     "attendantId": 4,
+     "date": "2025-07-12T09:00:00.000Z",
+     "status": "CONFIRMED",
+     "reason": "Dores de cabeça",
+     "notes": null,
+     "duration": 45,
+     "createdAt": "2025-06-15T15:38:00.221Z",
+     "updatedAt": "2025-06-15T15:41:26.909Z"
+   }
+   ```
 
 ### Registros Médicos (Medical Records)
 
@@ -611,7 +692,19 @@ can('read', 'Patient');
 2. **POST /medical-records**
 
    - **Descrição**: Cria um novo registro médico.
-   - **Permissão**: Usado para criar um registro médico, geralmente feito por um médico, apenas admin ou doutores podem acessar.
+   - **Permissão**: Apenas DOCTOR.
+   - **Entrada:**
+
+   ```json
+   {
+     "patientId": 8,
+     "date": "2025-06-14T18:27:00.519Z",
+     "diagnosis": "Canelite severa",
+     "prescription": "Anti-inflamatório e repouso",
+     "notes": null
+   }
+   ```
+
    - **Resposta:**
 
    ```json
@@ -631,16 +724,186 @@ can('read', 'Patient');
 3. **GET /medical-records/:id**
 
    - **Descrição**: Retorna as informações de um registro médico específico.
-   - **Permissão**: Usado para consultar um registro médico individual, permitido por administrador, doutor ou paciente.
+   - **Permissão**: Apenas ADMIN, DOCTOR e PATIENT.
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 3,
+     "patientId": 8,
+     "doctorId": 4,
+     "date": "2025-06-14T18:27:00.519Z",
+     "diagnosis": "Canelite severa",
+     "prescription": "Anti-inflamatório e repouso",
+     "notes": null,
+     "createdAt": "2025-06-14T18:27:00.519Z",
+     "updatedAt": "2025-06-14T18:27:00.519Z"
+   }
+   ```
 
 4. **PATCH /medical-records/:id**
 
    - **Descrição**: Atualiza um registro médico específico.
-   - **Permissão**: Usado para editar informações em um registro médico, como diagnóstico ou prescrição, apenas administrador e doutor podem atualizar, apenas administrador pode excluir.
+   - **Permissão**: Apenas DOCTOR.
+   - **Entrada:**
+
+   ```json
+   {
+     "doctorId": 4,
+     "date": "2025-06-14T18:27:00.519Z",
+     "diagnosis": "Canelite severa",
+     "prescription": "Anti-inflamatório e repouso",
+     "notes": null
+   }
+   ```
 
 5. **DELETE /medical-records/:id**
    - **Descrição**: Exclui um registro médico específico.
-   - **Permissão**: Usado para remover um registro médico do sistema.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+   ```json
+   {
+     "id": 3,
+     "patientId": 8,
+     "doctorId": 4,
+     "date": "2025-06-14T18:27:00.519Z",
+     "diagnosis": "Canelite severa",
+     "prescription": "Anti-inflamatório e repouso",
+     "notes": null,
+     "createdAt": "2025-06-14T18:27:00.519Z",
+     "updatedAt": "2025-06-14T18:27:00.519Z"
+   }
+   ```
+
+### Admin
+
+1. **GET /admin**
+
+   - **Descrição**: Retorna todos os administradores registrados no sistema.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+
+   ```json
+   [
+     {
+       "id": 1,
+       "accessCode": "3123",
+       "userId": 9,
+       "createdAt": "2025-06-08T14:54:57.105Z",
+       "updatedAt": "2025-06-08T14:54:57.105Z",
+       "user": {
+         "email": "mateusleonardo@hotmail.com",
+         "name": "Mateus Leonardo",
+         "cpf": "97987533300",
+         "createdAt": "2025-06-08T14:54:57.090Z",
+         "updatedAt": "2025-06-08T14:59:00.608Z"
+       }
+     }
+   ]
+   ```
+
+2. **POST /admin**
+
+   - **Descrição**: Cria um novo administrador no sistema.
+   - **Permissão**: Apenas ADMIN.
+   - **Entrada:**
+
+   ```json
+   {
+     "email": "mateusleonardo@hotmail.com",
+     "name": "Mateus Leonardo",
+     "cpf": "97987533300",
+     "password": "12345",
+     "accessCode": "3123"
+   }
+   ```
+
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 2,
+     "accessCode": "1548",
+     "userId": 26,
+     "createdAt": "2025-06-15T19:26:17.497Z",
+     "updatedAt": "2025-06-15T19:26:17.497Z"
+   }
+   ```
+
+3. **GET /admin/:id**
+
+   - **Descrição**: Retorna as informações de um administrador específico.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 1,
+     "accessCode": "3123",
+     "userId": 9,
+     "createdAt": "2025-06-08T14:54:57.105Z",
+     "updatedAt": "2025-06-08T14:54:57.105Z",
+     "user": {
+       "email": "mateusleonardo@hotmail.com",
+       "name": "Mateus Leonardo",
+       "cpf": "97987533300",
+       "createdAt": "2025-06-08T14:54:57.090Z",
+       "updatedAt": "2025-06-08T14:59:00.608Z"
+     }
+   }
+   ```
+
+4. **PATCH /admin/:id**
+
+   - **Descrição**: Atualiza um administrador específico.
+   - **Permissão**: Apenas ADMIN.
+   - **Entrada:**
+
+   ```json
+   {
+     "accessCode": "3123",
+     "email": "mateusleonardo@hotmail.com",
+     "name": "Mateus Leonardo",
+     "cpf": "97987533300"
+   }
+   ```
+
+   - **Resposta:**
+
+   ```json
+   {
+     "id": 1,
+     "accessCode": "2241",
+     "userId": 9,
+     "createdAt": "2025-06-08T14:54:57.105Z",
+     "updatedAt": "2025-06-15T19:31:32.801Z",
+     "user": {
+       "email": "mateus_leonardo1997@hotmail.com",
+       "name": "Mateus Leonardo",
+       "cpf": "45885434824",
+       "createdAt": "2025-06-08T14:54:57.090Z",
+       "updatedAt": "2025-06-08T14:59:00.608Z"
+     }
+   }
+   ```
+
+5. **DELETE /admin/:id**
+   - **Descrição**: Exclui um administrador específico.
+   - **Permissão**: Apenas ADMIN.
+   - **Resposta:**
+   ```json
+   {
+     "id": 3,
+     "patientId": 8,
+     "doctorId": 4,
+     "date": "2025-06-14T18:27:00.519Z",
+     "diagnosis": "Canelite severa",
+     "prescription": "Anti-inflamatório e repouso",
+     "notes": null,
+     "createdAt": "2025-06-14T18:27:00.519Z",
+     "updatedAt": "2025-06-14T18:27:00.519Z"
+   }
+   ```
 
 ---
 
@@ -648,10 +911,9 @@ can('read', 'Patient');
 
 ### Requisitos:
 
-- **Node.js** (versão 14 ou superior)
+- **Node.js** (versão 22 ou superior)
 - **Prisma**
 - **NestJS**
-- **CASL**
 
 ### Passos para Instalação:
 
@@ -659,12 +921,7 @@ can('read', 'Patient');
 
    ```bash
    git clone https://github.com/MateusLeonardo/sghss.git
-   cd sghss
    ```
-
-```
-
-```
 
 2. **Instale as dependências**:
 
@@ -681,7 +938,7 @@ can('read', 'Patient');
 4. **Gere um jwt secret key em algum site:**
 
    ```
-     https://jwtsecret.com/generate
+    https://jwtsecret.com/generate
    ```
 
 5. **Rode as migrações do Prisma**:
@@ -692,15 +949,5 @@ can('read', 'Patient');
 
 6. **Inicie o servidor**:
    ```bash
-   npm run start
+   npm run start:dev
    ```
-
----
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
-```
-
-```
