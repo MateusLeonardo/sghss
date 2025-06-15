@@ -29,6 +29,12 @@ export class AdminService {
       ...userData,
       role: Role.ADMIN,
     });
+    const adminExists = await this.prismaService.admin.findUnique({
+      where: {
+        accessCode,
+      },
+    });
+    if (adminExists) throw new ConflictException('Código de acesso já existe');
 
     return this.prismaService.admin.create({
       data: {
@@ -83,6 +89,17 @@ export class AdminService {
     if (!admin) throw new NotFoundException('Admin não encontrado');
 
     await this.usersService.update(admin.userId, userData);
+
+    if (accessCode) {
+      const existsAdminAccessCode = await this.prismaService.admin.findUnique({
+        where: {
+          accessCode,
+        },
+      });
+
+      if (existsAdminAccessCode)
+        throw new ConflictException('Código de acesso já existe');
+    }
 
     return this.prismaService.admin.update({
       where: {
